@@ -5,7 +5,6 @@ import asyncio
 import time
 
 from backend.db.database import SessionLocal
-from backend.api.trades_ws_api import broadcast_trade
 
 from backend.repositories.order_repo import OrderRepository
 from backend.repositories.execution_repo import ExecutionRepository
@@ -136,51 +135,62 @@ class MatchingEngine:
             order.side
         )
 
-        # =================================================
-        # 🔥 1️⃣ Time & Sales 브로드캐스트 (NEW)
-        # =================================================
-        trade_data = {
-            "type": "trade",  # ❗ 프론트 필터용
-            "symbol": symbol.symbol_code,  # BTCUSDT
-            "price": exec_price,
-            "qty": qty,
-            "side": order.side.upper(),  # BUY / SELL
-            "ts": time.time(),  # timestamp
-        }
-
-        asyncio.create_task(
-            broadcast_trade(trade_data)
+        broadcast_manager.publish_trade(
+            symbol.symbol_code,
+            {
+                "symbol": symbol.symbol_code,  # BTCUSDT
+                "price": exec_price,
+                "qty": qty,
+                "side": order.side.upper(),  # BUY / SELL
+                "ts": time.time(),  # unix timestamp
+            }
         )
 
-        # -----------------------------------------
-        # 🔥 WebSocket Push 알림
-        # -----------------------------------------
-        execution_data = {
-            "order_id": order.order_id,
-            "symbol": symbol.symbol_code,
-            "side": order.side,
-            "price": exec_price,
-            "qty": qty,
-            "type": "AUTO",
-            "created_at": execution.created_at.isoformat(),
-        }
-
-        asyncio.get_event_loop().create_task(
-            execution_notifier.broadcast(account.account_id, execution_data)
-        )
-
-        asyncio.create_task(
-            broadcast_manager.send(
-                order.account_id,
-                {
-                    "type": "execution",
-                    "symbol": order.symbol.symbol_code,
-                    "side": order.side,
-                    "price": exec_price,
-                    "qty": qty
-                }
-            )
-        )
+        # # =================================================
+        # # 🔥 1️⃣ Time & Sales 브로드캐스트 (NEW)
+        # # =================================================
+        # trade_data = {
+        #     "type": "trade",  # ❗ 프론트 필터용
+        #     "symbol": symbol.symbol_code,  # BTCUSDT
+        #     "price": exec_price,
+        #     "qty": qty,
+        #     "side": order.side.upper(),  # BUY / SELL
+        #     "ts": time.time(),  # timestamp
+        # }
+        #
+        # asyncio.create_task(
+        #     broadcast_trade(trade_data)
+        # )
+        #
+        # # -----------------------------------------
+        # # 🔥 WebSocket Push 알림
+        # # -----------------------------------------
+        # execution_data = {
+        #     "order_id": order.order_id,
+        #     "symbol": symbol.symbol_code,
+        #     "side": order.side,
+        #     "price": exec_price,
+        #     "qty": qty,
+        #     "type": "AUTO",
+        #     "created_at": execution.created_at.isoformat(),
+        # }
+        #
+        # asyncio.get_event_loop().create_task(
+        #     execution_notifier.broadcast(account.account_id, execution_data)
+        # )
+        #
+        # asyncio.create_task(
+        #     broadcast_manager.send(
+        #         order.account_id,
+        #         {
+        #             "type": "execution",
+        #             "symbol": order.symbol.symbol_code,
+        #             "side": order.side,
+        #             "price": exec_price,
+        #             "qty": qty
+        #         }
+        #     )
+        # )
 
     # ==========================================================
     # 전체 종목 매칭

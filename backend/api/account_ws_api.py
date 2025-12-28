@@ -1,96 +1,114 @@
-import asyncio
-
-from fastapi import APIRouter, WebSocket, WebSocketDisconnect
+from fastapi import APIRouter, WebSocket, WebSocketDisconnect, Query
 from backend.db.database import SessionLocal
-from backend.repositories.position_repo import PositionRepository
 from backend.repositories.account_repo import AccountRepository
+from backend.repositories.position_repo import PositionRepository
+from backend.services.auth_service import auth_service
 from backend.services.account_service import account_service
 from backend.services.market.market_service import market_service
 from backend.services.ws_broadcast import broadcast_manager
 
 router = APIRouter()
 
-pos_repo = PositionRepository()
 acc_repo = AccountRepository()
+pos_repo = PositionRepository()
 
 
-@router.websocket("/ws/account/{account_id}")
-async def account_ws(websocket: WebSocket, account_id: int):
+@router.websocket("/ws/account")
+async def ws_account(
+    websocket: WebSocket,
+    token: str = Query(...),
+    account_id: int = Query(...),
+):
     await websocket.accept()
-    print(f"[WS] Account WS Connected → {account_id}")
-    await broadcast_manager.connect(account_id, websocket)
 
+    # -------------------------
+    # 1) token → user_id
+    # -------------------------
+    user_id = auth_service.get_user_id_from_token(token)
+    if not user_id:
+        await websocket.close(code=1008)
+        return
+
+    # -------------------------
+    # 2) account 소유권 검증
+    # -------------------------
+    db = SessionLocal()
     try:
-        while True:
-            await asyncio.sleep(0.2)
+        account = acc_repo.get(db, account_id)
+        if not account or int(account.user_id) != int(user_id):
+            await websocket.close(code=1008)
+            return
+    finally:
+        db.close()
 
-            db = SessionLocal()
+    # -------------------------
+    # 3) WS 연결 등록 (⭐ await 필수)
+    # -------------------------
+    broadcast_manager.connect_account(account_id, websocket)
+    print(f"[WS] account connected user={user_id} account={account_id}")
 
-            # =======================================
-            # ① 계좌 먼저 가져오기  ★ 매우 중요
-            # =======================================
-            account = acc_repo.get(db, account_id)
+    # ==================================================
+    # 🔥 4) 초기 Account Snapshot 1회 PUSH (핵심)
+    # ==================================================
+    db = SessionLocal()
+    try:
+        positions = pos_repo.get_by_account(db, account_id)
+        account = acc_repo.get(db, account_id)
 
-            # ================================
-            # ① 포지션 목록 가져오기
-            # ================================
-            positions = pos_repo.get_by_account(db, account_id)
-            pos_rows = []
+        pos_rows = []
+        for p in positions:
+            price_info = market_service.get_price(p.symbol.symbol_code)
+            last_price = price_info.get("last") if price_info else None
 
-            for p in positions:
-                price_info = market_service.get_price(p.symbol.symbol_code)
-                last_price = price_info.get("last") if price_info else None
-                multiplier = float(p.symbol.multiplier)
+            qty = float(p.qty or 0)
+            entry = float(p.entry_price or 0)
+            multiplier = float(p.symbol.multiplier)
 
-                qty = float(p.qty or 0)
-                entry_price = float(p.entry_price or 0)
+            if qty == 0 or last_price is None:
+                upnl = 0.0
+            elif qty > 0:
+                upnl = (last_price - entry) * qty * multiplier
+            else:
+                upnl = (entry - last_price) * abs(qty) * multiplier
 
-                # ---- 미실현손익 계산 ----
-                if qty == 0 or last_price is None:
-                    upnl = 0.0
-                else:
-                    if qty > 0:  # 롱
-                        upnl = (last_price - entry_price) * qty * multiplier
-                    else:  # 숏
-                        upnl = (entry_price - last_price) * abs(qty) * multiplier
+            liq = account_service.calc_liquidation_price(p, account, p.symbol)
 
-                liq = account_service.calc_liquidation_price(p, account, p.symbol)
-
-                pos_rows.append({
-                    "symbol": p.symbol.symbol_code,
-                    "side": ("LONG" if float(p.qty) > 0 else "SHORT" if float(p.qty) < 0 else ""),
-                    "qty": qty,
-                    "entry_price": entry_price,
-                    "realized_pnl": float(p.realized_pnl or 0),
-                    "unrealized_pnl": upnl,  # ⭐ 드디어 포함됨!
-                    "current_price": last_price,
-                    "liq_price": liq
-                })
-
-            # ================================
-            # ② 계좌 정보 가져오기
-            # ================================
-            account = acc_repo.get(db, account_id)
-            account_row = {
-                "balance": float(account.balance),
-                "margin_used": float(account.margin_used),
-                "margin_available": float(account.margin_available),
-                "pnl_realized": float(account.pnl_realized),
-                "pnl_unrealized": float(account.pnl_unrealized),
-            }
-
-            db.close()
-
-            # ================================
-            # ③ 클라이언트로 Push
-            # ================================
-            await websocket.send_json({
-                "type": "account_update",
-                "positions": pos_rows,
-                "account": account_row
+            pos_rows.append({
+                "symbol": p.symbol.symbol_code,
+                "side": "LONG" if qty > 0 else "SHORT" if qty < 0 else "",
+                "qty": qty,
+                "entry_price": entry,
+                "realized_pnl": float(p.realized_pnl or 0),
+                "unrealized_pnl": upnl,
+                "current_price": last_price,
+                "liq_price": liq,
             })
 
-    except WebSocketDisconnect:
-        print(f"[WS] Account WS Disconnected → {account_id}")
-        broadcast_manager.disconnect(account_id, websocket)
+        account_row = {
+            "balance": float(account.balance),
+            "margin_used": float(account.margin_used),
+            "margin_available": float(account.margin_available),
+            "pnl_realized": float(account.pnl_realized),
+            "pnl_unrealized": float(account.pnl_unrealized),
+        }
 
+        await websocket.send_json({
+            "type": "account_update",
+            "positions": pos_rows,
+            "account": account_row,
+        })
+
+    finally:
+        db.close()
+
+    # -------------------------
+    # 5) 이후부터는 PUSH 대기
+    # -------------------------
+    try:
+        while True:
+            await websocket.receive_text()
+    except WebSocketDisconnect:
+        pass
+    finally:
+        broadcast_manager.disconnect_account(account_id, websocket)
+        print(f"[WS] account disconnected user={user_id} account={account_id}")

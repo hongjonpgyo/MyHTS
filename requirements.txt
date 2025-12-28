@@ -1,3 +1,7 @@
+yfinance
+starlette
+bcrypt
+python-jose
 fastapi-utils
 fastapi
 uvicorn

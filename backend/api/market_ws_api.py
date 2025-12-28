@@ -3,11 +3,16 @@ from starlette.websockets import WebSocketDisconnect
 import asyncio
 
 from backend.services.market.market_service import market_service
+from backend.services.symbol_service import is_crypto
 
 router = APIRouter(prefix="/ws", tags=["WebSocket"])
 
 @router.websocket("/price/{symbol_code}")
 async def price_stream(websocket: WebSocket, symbol_code: str):
+    if not is_crypto(symbol_code):
+        await websocket.close(code=1008)  # policy violation
+        return
+
     await websocket.accept()
     symbol = symbol_code.upper()
 

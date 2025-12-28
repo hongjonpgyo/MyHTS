@@ -20,7 +20,8 @@ class OrderRepository:
             qty=qty,
             request_price=request_price,
             order_type="MARKET",     # 현재는 MARKET 고정
-            status="FILLED"          # 즉시 체결 HTS 구조
+            status="FILLED",          # 즉시 체결 HTS 구조
+            reason="NORMAL"
         )
 
         db.add(order)
@@ -37,7 +38,8 @@ class OrderRepository:
             qty=qty,
             request_price=price,
             status="OPEN",
-            order_type="LIMIT"
+            order_type="LIMIT",
+            reason="NORMAL"
         )
 
         db.add(order)

@@ -20,6 +20,7 @@ class Order(Base):
     status = Column(String(20), default="FILLED")
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, server_default=func.now())
+    reason = Column(String(30), nullable=True)
 
 # 🔥 여기가 핵심!
     symbol = relationship("Symbol")

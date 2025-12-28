@@ -1,4 +1,5 @@
 import asyncio
+import threading
 
 from fastapi import FastAPI
 
@@ -15,8 +16,12 @@ from backend.api.auth_api import router as auth_router
 from backend.api.execution_ws_api import router as execution_ws_router
 from backend.api.account_ws_api import router as account_ws_router
 from backend.api.trades_ws_api import router as trades_ws_router
+from backend.api.orderbook_futures_api import router as orderbook_futures_router
+from backend.config.symbol_registry import SYMBOL_REGISTRY
+from backend.config.settings import POLLING_INTERVAL
 
 from backend.db.database import SessionLocal
+from backend.services.market.futures_price_poller import YahooPriceThread
 
 # Services
 from backend.services.market.market_service import market_service
@@ -59,25 +64,35 @@ def register_routers(app: FastAPI):
     app.include_router(execution_ws_router)
     app.include_router(account_ws_router)
     app.include_router(trades_ws_router)
-
+    app.include_router(orderbook_futures_router)
 
 def register_startup_events(app: FastAPI):
     """시작 시 수행할 작업들을 정의"""
     engine = MatchingEngine()
 
     @app.on_event("startup")
-    def startup_event():
+    async def startup_event():
         print("🔥 MarketService Startup 시작")
 
-        # 등록할 심볼 목록
-        symbols =  ["BTCUSDT", "ETHUSDT", "SOLUSDT", "XRPUSDT", "BNBUSDT"]
-        # symbols = SYMBOLS_LIST
+        # 1) binance 심볼만 stream에 등록
+        binance_symbols = [s for s, meta in SYMBOL_REGISTRY.items() if meta["price_source"] == "binance"]
+        for sym in binance_symbols:
+            market_service.add_symbol(sym)  # ✅ Binance WS 구독 대상만
 
-        for sym in symbols:
-            market_service.add_symbol(sym)
-
-        # WS + Price Cache 시작
+        # 2) Binance WS 시작
         market_service.start()
+
+        # 3) Yahoo futures poller 시작
+        for sym, meta in SYMBOL_REGISTRY.items():
+            if meta["price_source"] == "yahoo":
+                poller = YahooPriceThread(
+                    cache=market_service.cache,
+                    symbol=sym,
+                    yahoo_symbol=meta["yahoo_symbol"],
+                    interval_sec=POLLING_INTERVAL
+                )
+                threading.Thread(target=poller.run, daemon=True).start()
+                print(f"✅ Futures Poller started: {sym} ({meta['yahoo_symbol']})")
 
         print("🔥 MarketService Startup 완료")
 
@@ -90,7 +105,10 @@ async def matching_loop():
         try:
             db = SessionLocal()
 
-            for sym in market_service.symbols:
+            # ✅ binance + futures 모두 대상
+            all_symbols = list(SYMBOL_REGISTRY.keys())
+
+            for sym in all_symbols:
                 await match_symbol(db, sym)
 
         except Exception as e:

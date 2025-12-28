@@ -1,4 +1,5 @@
 import asyncio
+import time
 
 from sqlalchemy.orm import Session
 
@@ -11,9 +12,9 @@ from backend.repositories.account_repo import AccountRepository
 from backend.services.position_service import position_service
 from backend.services.account_service import account_service
 from backend.services.market.market_service import market_service
+from backend.services.trade_stream import publish_trade
 
-from backend.api.trades_ws_api import broadcast_trade
-
+from backend.services.ws_broadcast import broadcast_manager
 
 
 class OrderService:
@@ -52,17 +53,17 @@ class OrderService:
             else price_info["bid"]
         )
 
-        # 주문 생성 (Market)
+        # 1️⃣ 주문 생성 (Market)
         order = self.order_repo.create(
             db=db,
             account_id=account_id,
             symbol_id=symbol.symbol_id,
             side=side,
             qty=qty,
-            request_price=None
+            request_price=None,
         )
 
-        # execution 생성
+        # 2️⃣ execution 생성
         execution = self.exec_repo.create(
             db=db,
             order_id=order.order_id,
@@ -74,7 +75,7 @@ class OrderService:
             fee=0.0
         )
 
-        # position 갱신
+        # 3️⃣ position 갱신
         position = position_service.handle_trade(
             db=db,
             account=account,
@@ -84,7 +85,7 @@ class OrderService:
             exec_price=exec_price
         )
 
-        # 계좌 갱신
+        # 4️⃣ 계좌 갱신
         account_service.update_after_trade(
             db=db,
             account=account,
@@ -92,25 +93,31 @@ class OrderService:
             symbol=symbol
         )
 
-        # 주문 상태 FILLED
+        # 5️⃣ 주문 상태 FILLED
         self.order_repo.mark_filled(db, order)
 
-        # ==================================================
-        # 🔥🔥🔥 Time & Sales WS 브로드캐스트
-        # ==================================================
+        self._publish_account_update(db, account.account_id)
+
+        # _process_fill 안, broadcast_trade 직전
+        print(
+            "[MATCH → TRADE : MARKET]",
+            symbol.symbol_code,
+            exec_price,
+            order.qty,
+            order.side
+        )
+
+        # 체결 직후
         trade_data = {
             "type": "trade",
             "symbol": symbol.symbol_code,
             "price": float(exec_price),
-            "qty": float(qty),
-            "side": side,
-            "ts": execution.created_at.isoformat(),
+            "qty": float(order.qty),
+            "side": order.side.upper(),
+            "ts": time.time(),
         }
 
-        loop = asyncio.get_event_loop()
-        loop.call_soon_threadsafe(
-            lambda: asyncio.create_task(broadcast_trade(trade_data))
-        )
+        publish_trade(symbol.symbol_code, trade_data)
 
         return {
             "ok": True,
@@ -180,9 +187,9 @@ class OrderService:
 
     def execute_limit_order(self, db, order, exec_price):
         account = self.account_repo.get(db, order.account_id)
-        symbol = order.symbol  # relationship
+        symbol = order.symbol
 
-        # executions 생성
+        # 1️⃣ execution 생성
         execution = self.exec_repo.create(
             db=db,
             order_id=order.order_id,
@@ -194,7 +201,7 @@ class OrderService:
             fee=0.0
         )
 
-        # position 업데이트
+        # 2️⃣ position 업데이트
         position = position_service.handle_trade(
             db=db,
             account=account,
@@ -204,7 +211,7 @@ class OrderService:
             exec_price=exec_price
         )
 
-        # 계좌 업데이트
+        # 3️⃣ 계좌 업데이트
         account_service.update_after_trade(
             db=db,
             account=account,
@@ -212,27 +219,88 @@ class OrderService:
             symbol=symbol
         )
 
-        # 주문 상태 = FILLED
+        # 4️⃣ 주문 상태 FILLED
         self.order_repo.mark_filled(db, order)
 
-        # ==================================================
-        # 🔥🔥🔥 Time & Sales WS 브로드캐스트 (핵심)
-        # ==================================================
+        self._publish_account_update(db, account.account_id)
+
+        # _process_fill 안, broadcast_trade 직전
+        print(
+            "[MATCH → TRADE : LIMIT]",
+            symbol.symbol_code,
+            exec_price,
+            order.qty,
+            order.side
+        )
+
+        # 체결 직후
         trade_data = {
             "type": "trade",
             "symbol": symbol.symbol_code,
             "price": float(exec_price),
             "qty": float(order.qty),
-            "side": order.side,
-            "ts": execution.created_at.isoformat(),
+            "side": order.side.upper(),
+            "ts": time.time(),
         }
 
-        loop = asyncio.get_event_loop()
-        loop.call_soon_threadsafe(
-            lambda: asyncio.create_task(broadcast_trade(trade_data))
-        )
+        publish_trade(symbol.symbol_code, trade_data)
 
         return execution
+
+    # backend/services/order_service.py (OrderService 안에 추가)
+    def _publish_account_update(self, db: Session, account_id: int):
+        account = self.account_repo.get(db, account_id)
+        if not account:
+            return
+
+        positions = self.position_repo.get_by_account(db, account_id)
+
+        pos_rows = []
+        for p in positions:
+            sym = p.symbol.symbol_code
+            price_info = market_service.get_price(sym) or {}
+            last_price = price_info.get("last") or price_info.get("price") or price_info.get("bid") or None
+
+            qty = float(p.qty or 0)
+            entry_price = float(p.entry_price or 0)
+            multiplier = float(getattr(p.symbol, "multiplier", 1) or 1)
+
+            if qty == 0 or last_price is None:
+                upnl = 0.0
+            else:
+                lp = float(last_price)
+                if qty > 0:
+                    upnl = (lp - entry_price) * qty * multiplier
+                else:
+                    upnl = (entry_price - lp) * abs(qty) * multiplier
+
+            liq = account_service.calc_liquidation_price(p, account, p.symbol)
+
+            pos_rows.append({
+                "symbol": sym,
+                "side": ("LONG" if qty > 0 else "SHORT" if qty < 0 else ""),
+                "qty": qty,
+                "entry_price": entry_price,
+                "unrealized_pnl": float(upnl),
+                "liq_price": float(liq) if liq is not None else None,
+            })
+
+        account_row = {
+            "balance": float(account.balance),
+            "margin_used": float(account.margin_used),
+            "margin_available": float(account.margin_available),
+            "pnl_realized": float(account.pnl_realized),
+            "pnl_unrealized": float(account.pnl_unrealized),
+        }
+
+        broadcast_manager.publish_account(
+            account_id=account_id,
+            message={
+                "type": "account_update",
+                "positions": pos_rows,
+                "account": account_row,
+            }
+        )
 
 
 order_service = OrderService()
