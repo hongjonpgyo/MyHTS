@@ -5,60 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fc4ef0b0-0a61-4aa1-a466-0a98435f6527" name="변경" comment=".">
-      <change afterPath="$PROJECT_DIR$/backend/api/orderbook_futures_api.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/api/ws.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/config/futures_meta.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/config/symbol_registry.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/config/symbols.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/create_tests_structure.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/scripts/generate_cqg_mock.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/services/event_bus.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/services/market/futures_price_poller.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/services/orderbook/orderbook_service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/services/orderbook/synthetic_orderbook.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/services/trade_stream.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/services/ws_manager.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/tests/chaos/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/tests/chaos/chaos_client.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/tests/chaos/run_chaos_test.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/tests/performance/run_multi_client.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/tests/trade/ramp_trade.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/utils/password.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/account_ws_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/account_ws_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/auth_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/auth_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/execution_ws_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/execution_ws_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/market_ws_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/market_ws_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/orderbook_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/orderbook_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/positions_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/positions_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/trades_ws_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/trades_ws_api.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/config/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/config/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/order_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/order_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/repositories/order_repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/repositories/order_repo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/auth_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/auth_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/market/market_cache.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/market/market_cache.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/services/market/market_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/market/market_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/market/market_stream.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/market/market_stream.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/matching/matching_engine.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/matching/matching_engine.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/order_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/order_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/symbol_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/symbol_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/ws_broadcast.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/ws_broadcast.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/1249" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/1249" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/services/orderbook/orderbook_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/orderbook/orderbook_service.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/1259" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/1259" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/2619" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2619" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2619_fsm" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2619_fsm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2658" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2658" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2659" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2659" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/2696" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2696" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/pg_internal.init" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/pg_internal.init" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/global/pg_control" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/global/pg_control" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/global/pg_internal.init" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/global/pg_internal.init" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/pg_subtrans/0000" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/pg_subtrans/0000" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/pg_wal/000000010000000000000001" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/pg_wal/000000010000000000000001" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/pg_xact/0000" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/pg_xact/0000" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/postmaster.pid" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/postmaster.pid" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -185,7 +141,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765711410425</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary=".">
+      <option name="closed" value="true" />
+      <created>1766917138623</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1766917138623</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

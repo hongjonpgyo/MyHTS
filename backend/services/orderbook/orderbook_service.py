@@ -4,6 +4,7 @@ from fastapi import HTTPException
 from sqlalchemy.orm import Session
 import requests
 
+from backend.config.settings import ORDERBOOK_DEPTH
 from backend.config.settings import BINANCE_DEPTH_URL
 from backend.config.symbol_registry import SYMBOL_REGISTRY
 from backend.models import Symbol
@@ -40,7 +41,7 @@ def get_orderbook(symbol: str, account_id: int, db: Session):
     # =================================
     depth = requests.get(
         BINANCE_DEPTH_URL,
-        params={"symbol": symbol, "limit": 20},
+        params={"symbol": symbol, "limit": ORDERBOOK_DEPTH*2},
         timeout=2,
     ).json()
 
