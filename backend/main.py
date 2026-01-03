@@ -17,6 +17,9 @@ from backend.api.execution_ws_api import router as execution_ws_router
 from backend.api.account_ws_api import router as account_ws_router
 from backend.api.trades_ws_api import router as trades_ws_router
 from backend.api.orderbook_futures_api import router as orderbook_futures_router
+from backend.api.favorite_api import router as favorite_router
+from backend.api.routes.ls_market import router as ls_market_router
+
 from backend.config.symbol_registry import SYMBOL_REGISTRY
 from backend.config.settings import POLLING_INTERVAL
 
@@ -65,6 +68,8 @@ def register_routers(app: FastAPI):
     app.include_router(account_ws_router)
     app.include_router(trades_ws_router)
     app.include_router(orderbook_futures_router)
+    app.include_router(favorite_router)
+    app.include_router(ls_market_router)
 
 def register_startup_events(app: FastAPI):
     """시작 시 수행할 작업들을 정의"""

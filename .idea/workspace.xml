@@ -5,13 +5,64 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fc4ef0b0-0a61-4aa1-a466-0a98435f6527" name="변경" comment=".">
+      <change afterPath="$PROJECT_DIR$/backend/api/favorite_api.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/api/routes/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/api/routes/ls_market.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/config/ls_settings.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/models/favorite_model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/repositories/favorite_repo.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/schemas/favorite.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/services/favorite_service.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/services/ls_auth_service.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/services/market/ls_market_service.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/app/db/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/app/db/database.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/app/db/reset_db.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/app/models/ls_futures_master.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/app/models/ls_futures_symbol.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/app/repositories/ls_future_master_repository.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_futures_symbols_service.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_rollover_service.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/tests/test.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/generate_backend_ls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/config/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/config/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/market/market_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/market/market_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/orderbook/orderbook_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/orderbook/orderbook_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/1247" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/1247" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/1249" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/1249" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/1259" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/1259" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/1259_vm" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/1259_vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2224" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2224" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2579" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2579" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2604" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2604" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2606" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2606" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2608" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2608" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2609" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2609" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2609_vm" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2609_vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2610" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2610" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2610_fsm" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2610_fsm" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/2619" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2619" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2619_fsm" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2619_fsm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2656" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2656" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2657" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2657" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2658" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2658" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2659" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2659" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2662" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2662" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2663" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2663" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2664" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2664" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2665" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2665" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2666" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2666" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2667" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2667" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2673" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2673" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2674" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2674" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2675" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2675" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2678" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2678" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2679" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2679" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/2696" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2696" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2703" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2703" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2704" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2704" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/3455" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/3455" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/5002" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/5002" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/global/pg_control" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/global/pg_control" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/pg_wal/000000010000000000000001" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/pg_wal/000000010000000000000001" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/pg_xact/0000" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/pg_xact/0000" afterDir="false" />
@@ -51,38 +102,40 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Python.bootstrap_myhts.executor&quot;: &quot;Run&quot;,
-    &quot;Python.create_tests_structure.executor&quot;: &quot;Run&quot;,
-    &quot;Python.flood_trade.executor&quot;: &quot;Run&quot;,
-    &quot;Python.generate_backend_structure.executor&quot;: &quot;Run&quot;,
-    &quot;Python.generate_hts_structures.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.orderbook_api.executor&quot;: &quot;Run&quot;,
-    &quot;Python.ramp_trade.executor&quot;: &quot;Run&quot;,
-    &quot;Python.reset_db.executor&quot;: &quot;Run&quot;,
-    &quot;Python.run_chaos_test.executor&quot;: &quot;Run&quot;,
-    &quot;Python.run_multi_client.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/DEV_HOME/Nija_Project/MyHTS/backend/api&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.bootstrap_myhts.executor": "Run",
+    "Python.create_tests_structure.executor": "Run",
+    "Python.flood_trade.executor": "Run",
+    "Python.generate_backend_ls.executor": "Run",
+    "Python.generate_backend_structure.executor": "Run",
+    "Python.generate_hts_structures.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.orderbook_api.executor": "Run",
+    "Python.ramp_trade.executor": "Run",
+    "Python.reset_db.executor": "Run",
+    "Python.run_chaos_test.executor": "Run",
+    "Python.run_multi_client.executor": "Run",
+    "Python.test.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/hongjongpyo/PycharmProjects/Ninja_MyHTS/backend_ls/app",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/backend_ls/app" />
+      <recent name="$PROJECT_DIR$/backend/api/routes" />
       <recent name="C:\DEV_HOME\Nija_Project\MyHTS\backend\api" />
       <recent name="C:\DEV_HOME\Nija_Project\MyHTS\backend\core" />
       <recent name="C:\DEV_HOME\Nija_Project\MyHTS\backend\db" />
-      <recent name="C:\DEV_HOME\Nija_Project\MyHTS\backend\repositories" />
-      <recent name="C:\DEV_HOME\Nija_Project\MyHTS\backend\schemas" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/backend_ls/tests" />
       <recent name="C:\DEV_HOME\Nija_Project\MyHTS" />
     </key>
   </component>
@@ -149,7 +202,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766917138623</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary=".">
+      <option name="closed" value="true" />
+      <created>1767260646723</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1767260646723</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
