@@ -22,7 +22,7 @@ FILES = [
     "app/core/security.py",
     "app/core/__init__.py",
 
-    "app/ls_api/ls_auth.py",
+    "app/ls_api/ls_auth_service.py",
     "app/ls_api/ls_futures_master.py",
     "app/ls_api/price.py",
     "app/ls_api/__init__.py",

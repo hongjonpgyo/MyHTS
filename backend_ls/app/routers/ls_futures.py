@@ -12,11 +12,11 @@ router = APIRouter(prefix="/ls/futures", tags=["LS FUTURES"])
 
 @router.post("/symbols/sync")
 def sync_symbols():
-    return sync_ls_futures_symbols()
+    return sync_ls_futures_master_o3101()
 
 @router.post("/master/sync")
 def sync_master():
-    return sync_ls_futures_master()
+    return sync_ls_futures_master_o3105()
 
 @router.get("/active/{base_code}")
 def get_active_futures(

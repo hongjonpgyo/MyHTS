@@ -1,6 +1,6 @@
 import requests
 from backend_ls.app.core.ls_config import LS_BASE_URL
-from backend_ls.app.ls_api.ls_auth import get_access_token
+from backend_ls.app.services.ls_auth_service import get_access_token
 
 
 def fetch_futures_price(symbol: str):

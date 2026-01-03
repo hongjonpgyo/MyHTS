@@ -4,7 +4,7 @@ import threading
 import websocket
 
 from backend_ls.app.cache.ls_price_cache import price_cache
-from backend_ls.app.ls_api.ls_auth import get_access_token
+from backend_ls.app.services.ls_auth_service import get_access_token
 from backend_ls.app.core.ls_config import LS_WS_URL
 
 class LSWebSocketClient:
