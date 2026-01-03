@@ -1,7 +1,7 @@
 import requests
 from typing import List, Dict, Optional
-from backend_ls.app.core.config import LS_BASE_URL
-from backend_ls.app.ls_api.auth import get_auth_headers
+from backend_ls.app.core.ls_config import LS_BASE_URL
+from backend_ls.app.ls_api.ls_auth import get_auth_headers
 
 def fetch_futures_master(
     exch_cd: Optional[str] = None

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 
-from backend_ls.app.cache.price_cache import price_cache
-from backend_ls.app.db.database import get_db
+from backend_ls.app.cache.ls_price_cache import price_cache
+from backend_ls.app.db.ls_database import get_db
 from backend_ls.app.services.ls_futures_master_service import sync_ls_futures_master
 from backend_ls.app.services.ls_futures_symbols_service import sync_ls_futures_symbols
 from fastapi import Depends

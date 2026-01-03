@@ -34,7 +34,7 @@ files = {
     BASE / "services" / "risk_service.py": "",
 
     # Market (추가)
-    BASE / "services" / "market" / "market_cache.py.20251208": "",
+    BASE / "services" / "market" / "ls_market_cache.py.20251208": "",
     BASE / "services" / "market" / "market_stream.py.20251208": "",
     BASE / "services" / "market" / "market_service.py": "",
 
@@ -54,11 +54,11 @@ files = {
     BASE / "schemas" / "market_schema.py": "",
 
     # DB
-    BASE / "db" / "database.py": "",
+    BASE / "db" / "ls_database.py": "",
     BASE / "db" / "models.py": "",
 
     # Core
-    BASE / "core" / "config.py": "",
+    BASE / "core" / "ls_config.py": "",
     BASE / "core" / "security.py": "",
 
     # Utils

@@ -1,7 +1,7 @@
 from sqlalchemy import (
     Column, Integer, String, Numeric, Boolean, Time
 )
-from backend_ls.app.db.database import Base
+from backend_ls.app.db.ls_database import Base
 
 
 class LSFuturesSymbol(Base):

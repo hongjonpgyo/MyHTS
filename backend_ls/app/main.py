@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from backend_ls.app.routers.futures import router as sync_symbols
-from backend_ls.app.routers.futures import router as sync_master
+from backend_ls.app.routers.ls_futures import router as sync_symbols
+from backend_ls.app.routers.ls_futures import router as sync_master
 
 app = FastAPI(title="LS OpenAPI Backend")
 

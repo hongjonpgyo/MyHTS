@@ -1,5 +1,5 @@
-from backend_ls.app.db.database import SessionLocal
-from backend_ls.app.ls_api.futures_master import fetch_futures_master
+from backend_ls.app.db.ls_database import SessionLocal
+from backend_ls.app.ls_api.ls_futures_master import fetch_futures_master
 from backend_ls.app.repositories.ls_futures_symbol_repository import LSFuturesSymbolRepository
 
 def sync_ls_futures_symbols():

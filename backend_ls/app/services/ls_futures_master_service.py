@@ -1,5 +1,5 @@
 from backend.db.database import SessionLocal
-from backend_ls.app.ls_api.futures_master import fetch_futures_master
+from backend_ls.app.ls_api.ls_futures_master import fetch_futures_master
 from backend_ls.app.repositories.ls_future_master_repository import LSFuturesMasterRepository
 
 def get_active_futures(db, base_code: str):

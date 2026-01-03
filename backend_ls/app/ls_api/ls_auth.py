@@ -1,6 +1,6 @@
 import time
 import requests
-from backend_ls.app.core.config import LS_APP_KEY, LS_APP_SECRET, LS_BASE_URL
+from backend_ls.app.core.ls_config import LS_APP_KEY, LS_APP_SECRET, LS_BASE_URL
 
 _TOKEN_CACHE = {
     "access_token": None,
