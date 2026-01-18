@@ -17,18 +17,18 @@ FILES = [
     "app/main.py",
     "app/__init__.py",
 
-    "app/core/ls_config.py",
-    "app/core/logging.py",
+    "app/core/ls_config_core.py",
+    "app/core/logging_core.py",
     "app/core/security.py",
     "app/core/__init__.py",
 
     "app/ls_api/ls_auth_service.py",
-    "app/ls_api/ls_futures_master.py",
+    "app/ls_api/ls_futures_master_api.py",
     "app/ls_api/price.py",
     "app/ls_api/__init__.py",
 
     "app/routers/health.py",
-    "app/routers/ls_futures.py",
+    "app/routers/ls_futures_router.py",
     "app/routers/__init__.py",
 
     "app/services/ls_futures_master_service.py",

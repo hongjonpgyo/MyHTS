@@ -1,10 +1,10 @@
 import requests
-from backend_ls.app.core.ls_config import LS_BASE_URL
-from backend_ls.app.services.ls_auth_service import get_access_token
+from backend_ls.app.core.ls_config_core import LS_BASE_URL
+from backend_ls.app.services.ls_auth_service import LSAuthService
 
 
 def fetch_futures_price(symbol: str):
-    token = get_access_token()
+    token = LSAuthService.get_access_token()
 
     headers = {
         "Content-Type": "application/json; charset=utf-8",

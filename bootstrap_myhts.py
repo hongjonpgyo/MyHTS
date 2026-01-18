@@ -14,7 +14,7 @@ def write(path: Path, content: str):
 
 def main():
     # 1) 기본 디렉토리
-    (ROOT / "apps" / "backend").mkdir(parents=True, exist_ok=True)
+    (ROOT / "apps" / "backend_binance_old").mkdir(parents=True, exist_ok=True)
     (ROOT / "apps" / "marketdata").mkdir(parents=True, exist_ok=True)
     (ROOT / "apps" / "engine").mkdir(parents=True, exist_ok=True)
     (ROOT / "apps" / "ui_desktop").mkdir(parents=True, exist_ok=True)
@@ -48,7 +48,7 @@ def main():
         3차 목표: Mobile App (Flutter or React Native)
 
         구조:
-        - apps/backend      : FastAPI 기반 API 서버
+        - apps/backend_binance_old      : FastAPI 기반 API 서버
         - apps/ui_desktop   : PyQt6 기반 HTS 클라이언트
         - apps/marketdata   : (추가 예정) 시세/호가 수집 엔진
         - apps/engine       : (추가 예정) 매칭엔진/시뮬레이터
@@ -56,9 +56,9 @@ def main():
         """
     )
 
-    # 4) backend: FastAPI 기본 서버
+    # 4) backend_binance_old: FastAPI 기본 서버
     write(
-        ROOT / "apps" / "backend" / "main.py",
+        ROOT / "apps" / "backend_binance_old" / "main.py",
         """
         from fastapi import FastAPI
         from pydantic import BaseModel
@@ -82,7 +82,7 @@ def main():
 
         @app.get("/health")
         async def health():
-            return {"status": "ok", "service": "backend"}
+            return {"status": "ok", "service": "backend_binance_old"}
 
         @app.post("/orders", response_model=OrderResponse)
         async def place_order(order: OrderRequest):
@@ -96,7 +96,7 @@ def main():
 
         @app.get("/ping")
         async def ping():
-            return {"msg": "MyHTS backend alive"}
+            return {"msg": "MyHTS backend_binance_old alive"}
         """
     )
 
@@ -236,7 +236,7 @@ def main():
     print("1) cd MyHTS")
     print("2) python -m venv venv && source venv/bin/activate (또는 Windows 방식)")
     print("3) pip install -r requirements.txt")
-    print("4) uvicorn apps.backend.main:app --reload --port 9000")
+    print("4) uvicorn apps.backend_binance_old.main:app --reload --port 9000")
     print("5) python apps/ui_desktop/main_window.py")
 
 if __name__ == "__main__":

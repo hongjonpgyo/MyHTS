@@ -56,15 +56,15 @@ class BaseRepository:
 
 REPOSITORY_TEMPLATES = {
     "account_repo.py": """
-from backend.repositories.base_repo import BaseRepository
-from backend.models.account_model import Account
+from backend_binance_old.repositories.base_repo import BaseRepository
+from backend_binance_old.models.account_model import Account
 
 class AccountRepository(BaseRepository):
     model = Account
 """,
     "position_repo.py": """
-from backend.repositories.base_repo import BaseRepository
-from backend.models.position_model import Position
+from backend_binance_old.repositories.base_repo import BaseRepository
+from backend_binance_old.models.position_model import Position
 
 class PositionRepository(BaseRepository):
     model = Position
@@ -73,22 +73,22 @@ class PositionRepository(BaseRepository):
         return db.query(self.model).filter(self.model.account_id == account_id).all()
 """,
     "order_repo.py": """
-from backend.repositories.base_repo import BaseRepository
-from backend.models.order_model import Order
+from backend_binance_old.repositories.base_repo import BaseRepository
+from backend_binance_old.models.order_model import Order
 
 class OrderRepository(BaseRepository):
     model = Order
 """,
     "execution_repo.py": """
-from backend.repositories.base_repo import BaseRepository
-from backend.models.execution_model import Execution
+from backend_binance_old.repositories.base_repo import BaseRepository
+from backend_binance_old.models.execution_model import Execution
 
 class ExecutionRepository(BaseRepository):
     model = Execution
 """,
     "symbol_repo.py": """
-from backend.repositories.base_repo import BaseRepository
-from backend.models.symbol_model import Symbol
+from backend_binance_old.repositories.base_repo import BaseRepository
+from backend_binance_old.models.symbol_model import Symbol
 
 class SymbolRepository(BaseRepository):
     model = Symbol
@@ -102,9 +102,9 @@ class SymbolRepository(BaseRepository):
 # Model Templates
 # -------------------------------------------------
 MODEL_TEMPLATES = {
-    "account_model.py": """
+    "ls_futures_account_model.py": """
 from sqlalchemy import Column, Integer, Float, String
-from backend.db.database import Base
+from backend_binance_old.db.database import Base
 
 class Account(Base):
     __tablename__ = "accounts"
@@ -116,7 +116,7 @@ class Account(Base):
 """,
     "position_model.py": """
 from sqlalchemy import Column, Integer, Float
-from backend.db.database import Base
+from backend_binance_old.db.database import Base
 
 class Position(Base):
     __tablename__ = "positions"
@@ -129,7 +129,7 @@ class Position(Base):
 """,
     "order_model.py": """
 from sqlalchemy import Column, Integer, Float, String
-from backend.db.database import Base
+from backend_binance_old.db.database import Base
 
 class Order(Base):
     __tablename__ = "orders"
@@ -143,7 +143,7 @@ class Order(Base):
 """,
     "execution_model.py": """
 from sqlalchemy import Column, Integer, Float, String
-from backend.db.database import Base
+from backend_binance_old.db.database import Base
 
 class Execution(Base):
     __tablename__ = "executions"
@@ -158,7 +158,7 @@ class Execution(Base):
 """,
     "symbol_model.py": """
 from sqlalchemy import Column, Integer, String
-from backend.db.database import Base
+from backend_binance_old.db.database import Base
 
 class Symbol(Base):
     __tablename__ = "symbols"
@@ -173,7 +173,7 @@ class Symbol(Base):
 # Schema Templates
 # -------------------------------------------------
 SCHEMA_TEMPLATES = {
-    "account_schema.py": """
+    "ls_account_schema.py": """
 from pydantic import BaseModel
 
 class AccountSchema(BaseModel):
@@ -185,7 +185,7 @@ class AccountSchema(BaseModel):
     class Config:
         orm_mode = True
 """,
-    "position_schema.py": """
+    "ls_position_schema.py": """
 from pydantic import BaseModel
 
 class PositionSchema(BaseModel):
@@ -198,7 +198,7 @@ class PositionSchema(BaseModel):
     class Config:
         orm_mode = True
 """,
-    "order_schema.py": """
+    "ls_order_schema.py": """
 from pydantic import BaseModel
 
 class OrderCreate(BaseModel):
@@ -241,9 +241,9 @@ class SymbolSchema(BaseModel):
 def generate():
     print("\n===== HTS 구조 자동 생성 시작 =====")
 
-    repo_dir = os.path.join(BASE_DIR, "backend", "repositories")
-    model_dir = os.path.join(BASE_DIR, "backend", "models")
-    schema_dir = os.path.join(BASE_DIR, "backend", "schemas")
+    repo_dir = os.path.join(BASE_DIR, "backend_binance_old", "repositories")
+    model_dir = os.path.join(BASE_DIR, "backend_binance_old", "models")
+    schema_dir = os.path.join(BASE_DIR, "backend_binance_old", "schemas")
 
     for d in [repo_dir, model_dir, schema_dir]:
         ensure_dir(d)

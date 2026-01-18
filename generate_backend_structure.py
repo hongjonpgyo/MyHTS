@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-BASE = Path("backend")
+BASE = Path("backend_binance_old")
 
 # 폴더 목록
 folders = [
@@ -34,7 +34,7 @@ files = {
     BASE / "services" / "risk_service.py": "",
 
     # Market (추가)
-    BASE / "services" / "market" / "ls_market_cache.py.20251208": "",
+    BASE / "services" / "market" / "ls_market_cache_core.py.20251208": "",
     BASE / "services" / "market" / "market_stream.py.20251208": "",
     BASE / "services" / "market" / "market_service.py": "",
 
@@ -46,30 +46,30 @@ files = {
     BASE / "repositories" / "symbol_repo.py": "",
 
     # Schemas
-    BASE / "schemas" / "account_schema.py": "",
-    BASE / "schemas" / "order_schema.py": "",
-    BASE / "schemas" / "position_schema.py": "",
+    BASE / "schemas" / "ls_account_schema.py": "",
+    BASE / "schemas" / "ls_order_schema.py": "",
+    BASE / "schemas" / "ls_position_schema.py": "",
     BASE / "schemas" / "execution_schema.py": "",
     BASE / "schemas" / "symbol_schema.py": "",
     BASE / "schemas" / "market_schema.py": "",
 
     # DB
-    BASE / "db" / "ls_database.py": "",
+    BASE / "db" / "ls_db.py": "",
     BASE / "db" / "models.py": "",
 
     # Core
-    BASE / "core" / "ls_config.py": "",
+    BASE / "core" / "ls_config_core.py": "",
     BASE / "core" / "security.py": "",
 
     # Utils
-    BASE / "utils" / "pnl_calculator.py": "",
-    BASE / "utils" / "margin_calculator.py": "",
-    BASE / "utils" / "price_fetcher.py": "",
+    BASE / "utils" / "ls_pnl_calculator_util.py": "",
+    BASE / "utils" / "ls_margin_calculator_util.py": "",
+    BASE / "utils" / "ls_price_fetcher_util.py": "",
 }
 
 
 def create_structure():
-    print("📁 Creating full FastAPI backend structure with MarketDataService...\n")
+    print("📁 Creating full FastAPI backend_binance_old structure with MarketDataService...\n")
 
     # 폴더 생성
     for folder in folders:

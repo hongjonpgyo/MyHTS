@@ -1,6 +1,6 @@
 from datetime import date
 
-from backend_ls.app.repositories.ls_future_master_repository import LSFuturesMasterRepository
+from backend_ls.app.repositories.ls_futures_master_repo import LSFuturesMasterRepository
 
 ROLLOVER_DAYS = 7
 
