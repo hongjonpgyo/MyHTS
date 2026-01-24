@@ -12,6 +12,7 @@ from backend_ls.app.ls_api.ls_auth_api import LSTokenManager
 from backend_ls.app.services.ls_auth_service import ls_auth_service
 from backend_ls.app.core.ls_config_core import LS_WS_URL
 from backend_ls.app.services.ls_execution_simulator_service import ExecutionSimulator
+from backend_ls.app.services.ls_market_tick_service import LSMarketTickService
 from backend_ls.app.services.ls_reservation_trigger_service import LSReservationTriggerService
 
 
@@ -153,28 +154,13 @@ class LSWebSocketClient:
             if not symbol:
                 return
 
-            last_price = tick.price
-
-            # 1️⃣ 예약 트리거 체크 (🔥 핵심)
-            triggered = LSReservationTriggerService.on_tick(
+            LSMarketTickService.on_tick(
                 db=db,
                 symbol=symbol,
-                price=last_price,
+                last_price=tick.price,
             )
-
-            if triggered:
-                print(f"[RESERVATION TRIGGERED] {symbol} @ {last_price} ({triggered}건)")
-
-            # 2️⃣ 체결 시뮬레이터 (기존 로직 유지)
-            ExecutionSimulator.on_price_tick(
-                db=db,
-                symbol=symbol,
-                last_price=last_price,
-            )
-
         finally:
             db.close()
-
 
 
 

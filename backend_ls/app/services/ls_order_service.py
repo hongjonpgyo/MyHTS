@@ -37,36 +37,44 @@ class LSOrderService:
             status="OPEN",
         )
         db.add(order)
-        db.commit()
+        db.flush()
         db.refresh(order)
         return order
 
     @staticmethod
     def _create_market_order(db: Session, payload: OrderCreate):
-        # 현재가 조회 (캐시/피드)
         last_price = ls_price_cache.get_last_price(payload.symbol)
+        print(f"MARKET ORDER LAST PRICE : {last_price}")
 
         if last_price is None:
-            raise HTTPException(503, "시장가 조회 실패")
+            raise HTTPException(
+                status_code=409,
+                detail="시세 미수신 상태에서는 시장가 주문이 불가합니다."
+            )
 
         order = Order(
-            account_id=payload.account_id,
+            account_id=int(payload.account_id),
             symbol=payload.symbol,
             side=payload.side,
             order_type="MARKET",
             qty=payload.qty,
-            request_price=last_price,
+            request_price=None,
             source=payload.source,
-            status="FILLED",
+            status="OPEN",
         )
 
         db.add(order)
-        db.commit()
+        db.flush()  # order_id 확보
+
+        # 즉시 체결
+        ExecutionSimulator.on_price_tick(
+            db=db,
+            symbol=payload.symbol,
+            last_price=last_price,
+        )
+
+        # db.commit()
         db.refresh(order)
-
-        # 🔔 체결 이벤트 발행 (옵션)
-        # ExecutionPublisher.publish(order)
-
         return order
 
     @staticmethod
@@ -101,7 +109,7 @@ class LSOrderService:
             o.status = "CANCELED"
             o.reason = "USER_CANCEL"
 
-        db.commit()
+        # db.commit()
 
         return {
             "ok": True,

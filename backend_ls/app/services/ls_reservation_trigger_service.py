@@ -27,52 +27,37 @@ class LSReservationTriggerService:
 
     @staticmethod
     def on_tick(db: Session, symbol: str, price: float) -> int:
-        """
-        tick 1번 들어올 때 처리된 예약 건수 리턴
-        """
         tick_price = float(price)
         waiting = reservation_repo.list_waiting_by_symbol(db, symbol)
 
         triggered_count = 0
 
         for r in waiting:
-            if not LSReservationTriggerService._is_triggered(r.trigger_op, float(r.trigger_price), tick_price):
+            if not LSReservationTriggerService._is_triggered(
+                    r.trigger_op,
+                    float(r.trigger_price),
+                    tick_price,
+            ):
                 continue
 
-            # ✅ 원자적으로 WAITING → TRIGGERED (중복 방지)
-            ok = reservation_repo.mark_triggered(db, r.reservation_id)
-            if not ok:
-                continue  # 이미 다른 워커/틱에서 처리
+            # 1️⃣ 원자적 선점
+            if not reservation_repo.mark_triggered(db, r.reservation_id):
+                continue
 
-            # ✅ 주문 생성
-            created_order = LSReservationTriggerService._create_order_from_reservation(db, r, tick_price)
+            try:
+                # 2️⃣ 주문 생성만 담당
+                LSReservationTriggerService._create_order_from_reservation(
+                    db, r, tick_price
+                )
 
-            # ✅ DONE 처리
-            reservation_repo.mark_done(db, r.reservation_id)
+                # 3️⃣ DONE 처리
+                reservation_repo.mark_done(db, r.reservation_id)
+                triggered_count += 1
 
-            # ✅ 체결 이벤트 push (UI 체결현황)
-            # - 시장 체결/내 체결 구분은 account_id로 가능
-            ExecutionBroadcaster.publish(
-                symbol=created_order.symbol,
-                side=created_order.side,
-                price=float(created_order.request_price or tick_price),
-                qty=float(created_order.qty),
-                executed_at=created_order.created_at,  # datetime OK
-                account_id=created_order.account_id,
-                order_id=created_order.order_id,
-                source="RESERVATION",
-                exec_type="TRADE",
-            )
-
-            # ExecutionBroadcaster.publish(
-            #     source="RESERVATION",
-            #     exec_type="STATUS",
-            #     reservation_id=r.reservation_id,
-            #     status="DONE",
-            #     symbol=r.symbol,
-            # )
-
-            triggered_count += 1
+            except Exception:
+                # 🔴 실패 시 원복 (선택)
+                reservation_repo.rollback_triggered(db, r.reservation_id)
+                raise
 
         return triggered_count
 

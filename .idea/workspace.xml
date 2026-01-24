@@ -5,207 +5,43 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fc4ef0b0-0a61-4aa1-a466-0a98435f6527" name="변경" comment=".">
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/adapters/ls_tick_adapter.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/core/logging_core.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/core/ls_config_core.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/ls_api/ls_auth_api.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/ls_api/ls_client_api.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/ls_api/ls_ws_client_api.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/ls_api/tr_0167.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/ls_api/tr_3101.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/ls_api/tr_3105.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/models/ls_favorite_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/models/ls_futures_account_balance_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/models/ls_futures_execution_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/models/ls_futures_login_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/models/ls_futures_market_tick.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/models/ls_futures_order_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/models/ls_futures_position_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/models/ls_futures_raw_3105.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/models/ls_futures_users_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/models/ls_reservation_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/realtime/execution_broadcast.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/repositories/ls_favorite_repo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/repositories/ls_futures_account_repo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/repositories/ls_futures_base_repo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/repositories/ls_futures_execution_repo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/repositories/ls_futures_master_repo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/repositories/ls_futures_order_repo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/repositories/ls_futures_raw_3101_repo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/repositories/ls_futures_raw_3105_repo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/repositories/ls_futures_reservation_repo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/repositories/ls_futures_user_repo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/repositories/ls_futures_watchlist_repo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/routers/ls_futures_raw_router.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/routers/ls_futures_router.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/schemas/ls_account_schema.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/schemas/ls_favorite_schema.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/schemas/ls_order_schema.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/schemas/ls_position_schema.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/schemas/ls_reservation_schema.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_account_service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_execution_service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_execution_simulator_service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_favorite_service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_futures_raw_3101_service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_futures_raw_3105_service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_futures_service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_order_service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_position_service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_reservation_trigger_service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/utils/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/utils/ls_margin_calculator_util.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/utils/ls_num_util.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/utils/ls_password_util.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/utils/ls_pnl_calculator_util.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/utils/ls_price_fetcher_util.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/scripts/ls_sync_ls_futures_script.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/tests/test_ls_3101_3105_load.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/app/config/symbols.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/app/models/ls_futures_protection_model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/app/models/ls_watchlist.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/app/repositories/ls_futures_protection_repo.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/app/schemas/ls_protection_schema.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_market_tick_service.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_symbol_provider.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_watchlist_factory.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_watchlist_provider.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/api/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/account_ws_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/api/account_ws_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/accounts_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/api/accounts_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/auth_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/api/auth_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/execution_ws_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/api/execution_ws_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/executions_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/api/executions_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/favorite_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/api/favorite_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/market_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/api/market_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/market_ws_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/api/market_ws_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/orderbook_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/api/orderbook_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/orderbook_api.py.20251208" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/api/orderbook_api.py.20251208" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/orderbook_futures_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/api/orderbook_futures_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/orders_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/api/orders_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/positions_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/api/positions_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/routes/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/api/routes/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/routes/ls_market.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/api/routes/ls_market.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/symbols_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/api/symbols_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/trades_ws_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/api/trades_ws_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/ws.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/api/ws.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/config/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/config/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/config/colors.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/config/colors.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/config/futures_meta.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/config/futures_meta.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/config/ls_settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/config/ls_settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/config/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/config/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/config/symbol_registry.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/config/symbol_registry.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/config/symbols.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/config/symbols.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/core/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/core/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/core/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/core/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/core/security.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/core/security.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/create_tests_structure.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/create_tests_structure.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/db/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/db/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/db/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/db/database.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/db/reset_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/db/reset_db.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/models/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/account_activity_log_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/models/account_activity_log_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/account_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/models/account_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/cash_transaction_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/models/cash_transaction_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/execution_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/models/execution_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/favorite_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/models/favorite_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/liquidation_event_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/models/liquidation_event_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/market_price_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/models/market_price_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/notification_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/models/notification_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/order_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/models/order_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/position_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/models/position_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/symbol_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/models/symbol_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/users_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/models/users_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/repositories/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/repositories/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/repositories/account_repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/repositories/account_repo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/repositories/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/repositories/base.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/repositories/base_repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/repositories/base_repo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/repositories/execution_repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/repositories/execution_repo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/repositories/favorite_repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/repositories/favorite_repo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/repositories/order_repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/repositories/order_repo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/repositories/position_repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/repositories/position_repo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/repositories/symbol_repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/repositories/symbol_repo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/repositories/user_repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/repositories/user_repo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/schemas/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/schemas/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/schemas/account_schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/schemas/account_schema.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/schemas/execution_schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/schemas/execution_schema.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/schemas/favorite.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/schemas/favorite.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/schemas/market_schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/schemas/market_schema.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/schemas/order_schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/schemas/order_schema.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/schemas/position_schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/schemas/position_schema.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/schemas/symbol_schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/schemas/symbol_schema.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/scripts/generate_cqg_mock.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/scripts/generate_cqg_mock.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/security.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/security.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/services/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/account_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/services/account_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/auth_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/services/auth_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/event_bus.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/services/event_bus.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/execution_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/services/execution_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/favorite_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/services/favorite_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/ls_auth_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/services/ls_auth_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/market/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/services/market/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/market/futures_price_poller.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/services/market/futures_price_poller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/market/ls_market_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/services/market/ls_market_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/market/market_cache.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/services/market/market_cache.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/market/market_cache.py.20251208" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/services/market/market_cache.py.20251208" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/market/market_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/services/market/market_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/market/market_stream.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/services/market/market_stream.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/market/market_stream.py.20251208" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/services/market/market_stream.py.20251208" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/matching/matching_engine.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/services/matching/matching_engine.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/notifier/execution_notifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/services/notifier/execution_notifier.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/order_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/services/order_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/orderbook/orderbook_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/services/orderbook/orderbook_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/orderbook/synthetic_orderbook.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/services/orderbook/synthetic_orderbook.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/position_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/services/position_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/risk_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/services/risk_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/symbol_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/services/symbol_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/trade_stream.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/services/trade_stream.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/ws_broadcast.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/services/ws_broadcast.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/ws_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/services/ws_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/tests/chaos/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/tests/chaos/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/tests/chaos/chaos_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/tests/chaos/chaos_client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/tests/chaos/run_chaos_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/tests/chaos/run_chaos_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/tests/performance/run_multi_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/tests/performance/run_multi_client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/tests/trade/ramp_trade.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/tests/trade/ramp_trade.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/utils/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/utils/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/utils/margin_calculator.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/utils/margin_calculator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/utils/num.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/utils/num.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/utils/password.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/utils/password.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/utils/pnl_calculator.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/utils/pnl_calculator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/utils/price_fetcher.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_binance_old/utils/price_fetcher.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/cache/ls_price_cache.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/cache/ls_price_cache.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/core/logging.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/adapters/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/core/ls_config.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/core/ls_market_cache.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/core/ls_market_cache_core.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/db/ls_database.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/db/ls_db.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/db/ls_reset_db.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/ls_api/ls_futures_master.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/ls_api/ls_futures_master_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/ls_api/ls_ws_client.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/models/ls_futures_master_raw.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/models/ls_futures_raw_3101.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/repositories/ls_futures_master_raw_repo.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/routers/ls_futures.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/services/ls_auth_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_auth_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/services/ls_futures_master_raw_service.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/services/ls_price_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_price_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/services/ls_rollover_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_rollover_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/tests/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/tests/test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bootstrap_myhts.py" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap_myhts.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_ls/app/ls_api/ls_ws_client_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/ls_api/ls_ws_client_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_ls/app/models/ls_reservation_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/models/ls_reservation_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_ls/app/repositories/ls_futures_reservation_repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/repositories/ls_futures_reservation_repo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_ls/app/routers/ls_futures_router.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/routers/ls_futures_router.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_ls/app/schemas/ls_order_schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/schemas/ls_order_schema.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_ls/app/schemas/ls_position_schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/schemas/ls_position_schema.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_ls/app/services/ls_execution_simulator_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_execution_simulator_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_ls/app/services/ls_futures_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_futures_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_ls/app/services/ls_order_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_order_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_ls/app/services/ls_position_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_position_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_ls/app/services/ls_reservation_trigger_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_reservation_trigger_service.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/1247" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/1247" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/1247_fsm" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/1247_fsm" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/1249" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/1249" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/1249_fsm" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/1249_fsm" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/1259" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/1259" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/1259_fsm" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/1259_fsm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/1259_vm" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/1259_vm" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/2224" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2224" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/2579" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2579" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/2604" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2604" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2604_fsm" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2604_fsm" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/2606" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2606" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/2608" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2608" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/2609" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2609" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2609_fsm" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2609_fsm" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/2610" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2610" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2618" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2618" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2618_vm" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2618_vm" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/2619" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2619" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/2619_fsm" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2619_fsm" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/2619_vm" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2619_vm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2620" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2620" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/2656" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2656" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/2657" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2657" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/2658" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2658" afterDir="false" />
@@ -221,31 +57,13 @@
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/2675" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2675" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/2678" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2678" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/2679" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2679" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2692" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2692" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2693" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2693" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/2696" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2696" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2699" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2699" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2701" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2701" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2702" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2702" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/2703" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2703" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/2704" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2704" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2838" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2838" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2838_fsm" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2838_fsm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2838_vm" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2838_vm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2839" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2839" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2840" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2840" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2840_vm" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2840_vm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2841" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2841" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/3455" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/3455" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/5002" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/5002" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/pg_internal.init" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/pg_internal.init" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/global/pg_control" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/global/pg_control" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/global/pg_internal.init" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/global/pg_internal.init" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/pg_xact/0000" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/pg_xact/0000" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/postmaster.pid" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/postmaster.pid" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generate_backend_ls.py" beforeDir="false" afterPath="$PROJECT_DIR$/generate_backend_ls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generate_backend_structure.py" beforeDir="false" afterPath="$PROJECT_DIR$/generate_backend_structure.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generate_hts_structures.py" beforeDir="false" afterPath="$PROJECT_DIR$/generate_hts_structures.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -282,41 +100,41 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python.bootstrap_myhts.executor": "Run",
-    "Python.client.executor": "Run",
-    "Python.create_tests_structure.executor": "Run",
-    "Python.flood_trade.executor": "Run",
-    "Python.generate_backend_ls.executor": "Run",
-    "Python.generate_backend_structure.executor": "Run",
-    "Python.generate_hts_structures.executor": "Run",
-    "Python.ls_sync_ls_futures_script.executor": "Run",
-    "Python.ls_ws_client.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.orderbook_api.executor": "Run",
-    "Python.ramp_trade.executor": "Run",
-    "Python.reset_db.executor": "Run",
-    "Python.run_chaos_test.executor": "Run",
-    "Python.run_multi_client.executor": "Run",
-    "Python.sync_ls_futures.executor": "Run",
-    "Python.test.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/hongjongpyo/PycharmProjects/Ninja_MyHTS/backend_ls/app/services",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.bootstrap_myhts.executor&quot;: &quot;Run&quot;,
+    &quot;Python.client.executor&quot;: &quot;Run&quot;,
+    &quot;Python.create_tests_structure.executor&quot;: &quot;Run&quot;,
+    &quot;Python.flood_trade.executor&quot;: &quot;Run&quot;,
+    &quot;Python.generate_backend_ls.executor&quot;: &quot;Run&quot;,
+    &quot;Python.generate_backend_structure.executor&quot;: &quot;Run&quot;,
+    &quot;Python.generate_hts_structures.executor&quot;: &quot;Run&quot;,
+    &quot;Python.ls_sync_ls_futures_script.executor&quot;: &quot;Run&quot;,
+    &quot;Python.ls_ws_client.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.orderbook_api.executor&quot;: &quot;Run&quot;,
+    &quot;Python.ramp_trade.executor&quot;: &quot;Run&quot;,
+    &quot;Python.reset_db.executor&quot;: &quot;Run&quot;,
+    &quot;Python.run_chaos_test.executor&quot;: &quot;Run&quot;,
+    &quot;Python.run_multi_client.executor&quot;: &quot;Run&quot;,
+    &quot;Python.sync_ls_futures.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/hongjongpyo/PycharmProjects/Ninja_MyHTS/backend_ls/app/services&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/backend_ls/app/services" />
+      <recent name="$PROJECT_DIR$/backend_ls/app/config" />
       <recent name="$PROJECT_DIR$/backend_ls/app/schemas" />
       <recent name="$PROJECT_DIR$/backend_ls/app/repositories" />
       <recent name="$PROJECT_DIR$/backend_ls/app/models" />
-      <recent name="$PROJECT_DIR$/backend_ls/app" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/backend_ls/app/services" />
@@ -428,7 +246,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767448611352</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary=".">
+      <option name="closed" value="true" />
+      <created>1768738016061</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1768738016061</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

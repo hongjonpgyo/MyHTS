@@ -7,8 +7,10 @@ from types import SimpleNamespace
 from fastapi import APIRouter, HTTPException, Depends, Header
 from sqlalchemy.orm import Session
 
+from backend_ls.app.models.ls_futures_protection_model import LSFuturesProtection
 from backend_ls.app.models.ls_reservation_model import OrderReservation
 from backend_ls.app.realtime.execution_broadcast import ExecutionBroadcaster
+from backend_ls.app.repositories.ls_futures_protection_repo import protection_repo
 from backend_ls.app.repositories.ls_futures_reservation_repo import reservation_repo
 from backend_ls.app.schemas.ls_order_schema import OrderCreate, OrderCancelRequest
 from backend_ls.app.cache.ls_price_cache import ls_price_cache
@@ -18,9 +20,12 @@ from backend_ls.app.models.ls_futures_login_model import LoginResponse, LoginReq
     PasswordResetConfirm
 from backend_ls.app.schemas.ls_account_schema import AccountBalanceOut
 from backend_ls.app.schemas.ls_order_schema import OrderResponse
-from backend_ls.app.schemas.ls_position_schema import PositionOut
+from backend_ls.app.schemas.ls_position_schema import PositionOut, ClosePositionResponse, ClosePositionRequest
+from backend_ls.app.schemas.ls_protection_schema import ProtectionCreate, ProtectionCancelRequest
 from backend_ls.app.schemas.ls_reservation_schema import ReservationOut, ReservationCreate
 from backend_ls.app.services.ls_account_service import LSAccountService
+from backend_ls.app.services.ls_watchlist_factory import get_watchlist_provider
+from backend_ls.app.services.ls_watchlist_provider import ConfigWatchlistProvider
 from backend_ls.app.services.ls_execution_simulator_service import ExecutionSimulator
 from backend_ls.app.services.ls_futures_service import LSFuturesService
 from backend_ls.app.services.ls_order_service import LSOrderService
@@ -104,17 +109,22 @@ def get_active_futures(base_code: str, db: Session = Depends(get_db)):
 
 
 @router.get("/watchlist")
-def get_watchlist(
+async def get_watchlist(
     only_has_price: bool = False,
     limit: int = 200,
     db: Session = Depends(get_db),
 ):
-    return LSFuturesService.get_watchlist(
-        db,
-        only_has_price=only_has_price,
-        limit=limit,
-    )
+    provider = get_watchlist_provider(db)
+    return await provider.get_rows()
+    # return LSFuturesService.get_watchlist(
+    #     db,
+    #     only_has_price=only_has_price,
+    #     limit=limit,
+    # )
 
+@router.get("/config/watchlist")
+def get_config_watchlist():
+    return ConfigWatchlistProvider.get_rows()
 
 # -------------------------------------------------
 # Price
@@ -166,7 +176,10 @@ def get_ls_time():
 # -------------------------------------------------
 @router.post("/orders", response_model=OrderResponse)
 def create_order(payload: OrderCreate, db: Session = Depends(get_db)):
-    return LSOrderService.create_order(db, payload)
+    print("🔥 ORDER PAYLOAD:", payload.dict())
+    order = LSOrderService.create_order(db, payload)
+    db.commit()
+    return order
 
 @router.get("/orders/open")
 def get_open_orders(
@@ -183,7 +196,13 @@ def cancel_orders(
     payload: OrderCancelRequest,
     db: Session = Depends(get_db),
 ):
-    return LSOrderService.cancel_orders(db, payload.order_ids)
+    try:
+        order = LSOrderService.cancel_orders(db, payload.order_ids)
+        db.commit()
+        return order
+    except Exception:
+        db.rollback()
+        raise
 
 
 # -------------------------------------------------
@@ -415,4 +434,141 @@ def test_execution():
     )
 
     return {"ok": True}
+
+@router.post("/protections", response_model=dict)
+def create_protections(
+    payload: ProtectionCreate,
+    db: Session = Depends(get_db),
+):
+    print("🔥 PROTECTION PAYLOAD:", payload.dict())
+
+    rows = LSFuturesService.create_protections(
+        db=db,
+        payload=payload,
+    )
+
+    return {
+        "ok": True,
+        "count": len(rows),
+        "items": [
+            {
+                "protection_id": r.id,
+                "account_id": r.account_id,
+                "symbol": r.symbol,
+                "side": r.side,
+                "type": r.type,
+                "price": float(r.price),
+                "qty": r.qty,
+                "status": "WAITING",
+                "source": payload.source,
+            }
+            for r in rows
+        ],
+    }
+
+@router.get("/protections")
+def get_protections(
+    account_id: int,
+    symbol: str | None = None,
+    db: Session = Depends(get_db),
+):
+    return LSFuturesService.get_protections(
+        db,
+        account_id=account_id,
+        symbol=symbol,
+    )
+
+@router.post("/protections/cancel")
+def cancel_protections(
+    payload: ProtectionCancelRequest,
+    db: Session = Depends(get_db),
+):
+    try:
+        LSFuturesService.cancel_protections(
+            db,
+            account_id=payload.account_id,
+            symbol=payload.symbol,
+        )
+        db.commit()
+        return {"ok": True}
+    except Exception:
+        db.rollback()
+        raise
+
+@router.post("/close_all")
+def close_all(
+    symbol: str,
+    account_id: int,
+    db: Session = Depends(get_db),
+):
+    try:
+        # ---------------------------------
+        # 0️⃣ 현재 포지션 조회
+        # ---------------------------------
+        pos = LSPositionService.get_position(
+            db=db,
+            account_id=account_id,
+            symbol=symbol,
+        )
+
+        if not pos:
+            raise HTTPException(409, "청산할 포지션이 없습니다.")
+
+        position_qty = abs(int(pos["qty"]))
+        if position_qty <= 0:
+            raise HTTPException(409, "청산 수량이 0입니다.")
+
+        # 포지션 반대 방향으로 청산
+        close_side = "SELL" if pos["side"] == "LONG" else "BUY"
+
+        # ---------------------------------
+        # 1️⃣ 예약 주문 취소
+        # ---------------------------------
+        reservation_repo.cancel_waiting_by_symbol(
+            db=db,
+            account_id=account_id,
+            symbol=symbol,
+        )
+
+        # ---------------------------------
+        # 2️⃣ 보호주문 비활성화
+        # ---------------------------------
+        protection_repo.deactivate_by_symbol(
+            db=db,
+            account_id=account_id,
+            symbol=symbol,
+        )
+
+        # ---------------------------------
+        # 3️⃣ 시장가 청산 주문
+        # ---------------------------------
+        LSOrderService.create_order(
+            db=db,
+            payload=OrderCreate(
+                account_id=account_id,
+                symbol=symbol,
+                side=close_side,
+                order_type="MARKET",
+                qty=position_qty,
+                source="SYSTEM",
+            ),
+        )
+
+        # ---------------------------------
+        # 4️⃣ 단일 커밋
+        # ---------------------------------
+        db.commit()
+
+        return {
+            "ok": True,
+            "symbol": symbol,
+            "closed_qty": position_qty,
+            "side": close_side,
+        }
+
+    except Exception:
+        db.rollback()
+        raise
+
+
 

@@ -3,7 +3,7 @@ from datetime import datetime
 from backend_ls.app.models.ls_reservation_model import OrderReservation
 
 
-class reservation_repo:
+class ReservationRepo:
 
     # -------------------------
     # Create
@@ -11,7 +11,7 @@ class reservation_repo:
     @staticmethod
     def create(db: Session, r: OrderReservation):
         db.add(r)
-        db.commit()
+        db.flush()
         db.refresh(r)
         return r
 
@@ -98,3 +98,44 @@ class reservation_repo:
             )
         )
         db.commit()
+
+    # -------------------------
+    # Rollback (🔥 안전장치)
+    # -------------------------
+    @staticmethod
+    def rollback_triggered(db: Session, reservation_id: int) -> bool:
+        """
+        TRIGGERED → WAITING 롤백
+        - 주문 생성 실패 시 사용
+        """
+        res = (
+            db.query(OrderReservation)
+            .filter(
+                OrderReservation.reservation_id == reservation_id,
+                OrderReservation.status == "TRIGGERED",
+            )
+            .first()
+        )
+
+        if not res:
+            return False
+
+        res.status = "WAITING"
+        res.triggered_at = None
+        db.commit()
+        return True
+
+    @staticmethod
+    def cancel_waiting_by_symbol(self, db: Session, account_id: int, symbol: str) -> int:
+        q = (
+            db.query(OrderReservation)
+            .filter(OrderReservation.account_id == account_id)
+            .filter(OrderReservation.symbol == symbol)
+            .filter(OrderReservation.status == "WAITING")
+        )
+        count = q.count()
+        q.update({"status": "CANCELED"}, synchronize_session=False)
+        return count
+
+reservation_repo = ReservationRepo()
+
