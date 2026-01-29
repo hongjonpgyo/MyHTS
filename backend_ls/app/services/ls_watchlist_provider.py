@@ -4,6 +4,8 @@ from sqlalchemy.orm import Session
 
 from backend_ls.app.models.ls_watchlist import LSWatchlistRow
 from backend_ls.app.config.symbols import LSSYMBOLS
+from backend_ls.app.services.ls_futures_service import LSFuturesService
+
 
 class WatchlistProvider:
     def get_rows(self):
@@ -28,4 +30,8 @@ class DBWatchlistProvider(WatchlistProvider):
     def __init__(self, db: Session):
         self.db = db
     async def get_rows(self):
-        return None
+        return LSFuturesService.get_watchlist(
+            self.db,
+            only_has_price=True,
+            limit=10,
+        )

@@ -20,7 +20,8 @@ class LSWebSocketClient:
     def __init__(self):
         self.ws = None
         self.connected = False
-        self.subscribed = set()  # (tr_cd, tr_key)
+        self.subscribed = set()
+        self.current_ovc_symbol: str | None = None
 
 
     @staticmethod
@@ -129,6 +130,39 @@ class LSWebSocketClient:
         if self.connected:
             self._send_subscribe(tr_cd, key)
 
+    def unsubscribe(self, tr_cd: str, tr_key: str):
+        key = self._pad_tr_key(tr_key)
+
+        if (tr_cd, key) not in self.subscribed:
+            return
+
+        token = LSTokenManager.get_token()
+        msg = {
+            "header": {"token": token, "tr_type": "4"},  # 4 = 해제
+            "body": {"tr_cd": tr_cd, "tr_key": key},
+        }
+
+        try:
+            self.ws.send(json.dumps(msg))
+            print(f"[LS WS] Unsubscribe sent {tr_cd} {repr(key)}")
+        except Exception:
+            pass
+
+        self.subscribed.discard((tr_cd, key))
+
+    def set_ovc_symbol(self, symbol: str):
+        symbol = self._pad_tr_key(symbol)
+
+        if symbol == self.current_ovc_symbol:
+            return
+
+        # 기존 OVC 해제
+        if self.current_ovc_symbol:
+            self.unsubscribe("OVC", self.current_ovc_symbol)
+
+        # 신규 OVC 구독
+        self.subscribe("OVC", symbol)
+        self.current_ovc_symbol = symbol
 
     def _send_subscribe(self, tr_cd: str, tr_key: str):
         token = LSTokenManager.get_token()
@@ -159,6 +193,7 @@ class LSWebSocketClient:
                 symbol=symbol,
                 last_price=tick.price,
             )
+
         finally:
             db.close()
 

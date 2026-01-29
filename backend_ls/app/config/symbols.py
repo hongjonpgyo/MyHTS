@@ -8,7 +8,8 @@ class LSSymbolConfig:
     tick_size: float
     price_source: str  # ls / binance / mock
 
-WATCHLIST_SOURCE = "config"
+# WATCHLIST_SOURCE = "config"
+WATCHLIST_SOURCE = "DB"
 
 LSSYMBOLS = [
     # SymbolConfig("CUSF26", "위안F26", "CME", 0.01, "ls"),

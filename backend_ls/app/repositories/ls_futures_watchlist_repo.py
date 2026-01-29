@@ -10,7 +10,7 @@ class LSFuturesWatchlistRepository:
         """
 
         if only_has_price:
-            sql += " WHERE last_price IS NOT NULL"
+            sql += " WHERE last_price IS NOT NULL AND IS_ACTIVE = 'Y' "
 
         sql += " ORDER BY symbol LIMIT :limit"
 

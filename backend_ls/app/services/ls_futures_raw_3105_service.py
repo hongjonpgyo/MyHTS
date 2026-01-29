@@ -5,15 +5,16 @@ from backend_ls.app.models.ls_futures_raw_3105 import LSFuturesRaw3105
 
 
 class LSFuturesRaw3105Service:
+    """
+    LS 3105 TR 결과를 ls_futures_raw_3105 테이블에 UPSERT
+
+    - PK / UNIQUE: symbol
+    - 성공한 종목만 rows로 전달됨 (호출 제한 / 실패 종목은 상위에서 제외)
+    - 항상 최신 스냅샷 유지 (히스토리 목적 아님)
+    """
 
     @staticmethod
-    def upsert_from_3105(db: Session, rows: list[dict]):
-        """
-        o3105OutBlock 결과를 ls_futures_raw_3105 테이블에 UPSERT
-        - PK: symbol
-        - rows: 성공한 종목만 전달됨
-        """
-
+    def upsert_from_3105(db: Session, rows: list[dict]) -> int:
         if not rows:
             return 0
 
@@ -102,6 +103,7 @@ class LSFuturesRaw3105Service:
                 diff=row.get("Diff"),
             )
 
+            # symbol 충돌 시 최신 값으로 갱신
             stmt = stmt.on_conflict_do_update(
                 index_elements=["symbol"],
                 set_={

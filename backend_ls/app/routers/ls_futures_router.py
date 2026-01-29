@@ -5,11 +5,13 @@ from datetime import datetime
 from types import SimpleNamespace
 
 from fastapi import APIRouter, HTTPException, Depends, Header
+from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from backend_ls.app.models.ls_futures_protection_model import LSFuturesProtection
 from backend_ls.app.models.ls_reservation_model import OrderReservation
 from backend_ls.app.realtime.execution_broadcast import ExecutionBroadcaster
+from backend_ls.app.realtime.price_broadcast import PriceBroadcaster
 from backend_ls.app.repositories.ls_futures_protection_repo import protection_repo
 from backend_ls.app.repositories.ls_futures_reservation_repo import reservation_repo
 from backend_ls.app.schemas.ls_order_schema import OrderCreate, OrderCancelRequest
@@ -23,10 +25,10 @@ from backend_ls.app.schemas.ls_order_schema import OrderResponse
 from backend_ls.app.schemas.ls_position_schema import PositionOut, ClosePositionResponse, ClosePositionRequest
 from backend_ls.app.schemas.ls_protection_schema import ProtectionCreate, ProtectionCancelRequest
 from backend_ls.app.schemas.ls_reservation_schema import ReservationOut, ReservationCreate
+from backend_ls.app.services.fx_service import FXService
 from backend_ls.app.services.ls_account_service import LSAccountService
 from backend_ls.app.services.ls_watchlist_factory import get_watchlist_provider
 from backend_ls.app.services.ls_watchlist_provider import ConfigWatchlistProvider
-from backend_ls.app.services.ls_execution_simulator_service import ExecutionSimulator
 from backend_ls.app.services.ls_futures_service import LSFuturesService
 from backend_ls.app.services.ls_order_service import LSOrderService
 from backend_ls.app.services.ls_position_service import LSPositionService
@@ -36,11 +38,14 @@ from backend_ls.app.services.ls_favorite_service import ls_favorite_service
 from backend_ls.app.repositories.ls_futures_user_repo import user_repo
 from backend_ls.app.utils.ls_password_util import hash_password
 from backend_ls.app.schemas.ls_favorite_schema import FavoriteCreate, FavoriteOut
+from backend_ls.app.core import ls_realtime_manager
 from fastapi import APIRouter, Request
 from fastapi.responses import StreamingResponse
 
 router = APIRouter(prefix="/ls/futures", tags=["LS FUTURES"])
 
+class OrderBookSymbolRequest(BaseModel):
+    symbol: str
 
 @router.post("/login", response_model=LoginResponse)
 async def login(payload: LoginRequest, db: Session = Depends(get_db)):
@@ -390,50 +395,51 @@ def cancel_reservation(
         raise HTTPException(404, "reservation not found")
 
     return row
-@router.post("/mock/price")
-def mock_price(symbol: str, price: float, db: Session = Depends(get_db)):
-    # 1️⃣ fake tick 생성
-    tick = SimpleNamespace(
-        symbol=symbol,
-        price=price,
-        change=0,
-        change_rate=0,
-        trade_time=datetime.now().strftime("%H%M%S"),
-        source="MOCK",
-    )
 
-    # 2️⃣ 가격 캐시 갱신 (🔥 핵심)
-    ls_price_cache.update_tick(tick)
-
-    # 3️⃣ 트리거 / 체결 시뮬레이터 호출 (🔥 핵심)
-    ExecutionSimulator.on_price_tick(
-        db=db,
-        symbol=symbol,
-        last_price=price,
-    )
-
-    return {
-        "ok": True,
-        "symbol": symbol,
-        "price": price,
-    }
-
-@router.post("/execution/test")
-def test_execution():
-    from datetime import datetime
-    from backend_ls.app.realtime.execution_broadcast import ExecutionBroadcaster
-
-    ExecutionBroadcaster.publish(
-        symbol="HSIF26",
-        side="BUY",
-        price=26950.0,
-        qty=1,
-        executed_at=datetime.now(),
-        account_id=1,
-        order_id=999,
-    )
-
-    return {"ok": True}
+# @router.post("/mock/price")
+# def mock_price(symbol: str, price: float, db: Session = Depends(get_db)):
+#     # 1️⃣ fake tick 생성
+#     tick = SimpleNamespace(
+#         symbol=symbol,
+#         price=price,
+#         change=0,
+#         change_rate=0,
+#         trade_time=datetime.now().strftime("%H%M%S"),
+#         source="MOCK",
+#     )
+#
+#     # 2️⃣ 가격 캐시 갱신 (🔥 핵심)
+#     ls_price_cache.update_tick(tick)
+#
+#     # 3️⃣ 트리거 / 체결 시뮬레이터 호출 (🔥 핵심)
+#     ExecutionSimulator.on_price_tick(
+#         db=db,
+#         symbol=symbol,
+#         last_price=price,
+#     )
+#
+#     return {
+#         "ok": True,
+#         "symbol": symbol,
+#         "price": price,
+#     }
+#
+# @router.post("/execution/test")
+# def test_execution():
+#     from datetime import datetime
+#     from backend_ls.app.realtime.execution_broadcast import ExecutionBroadcaster
+#
+#     ExecutionBroadcaster.publish(
+#         symbol="HSIF26",
+#         side="BUY",
+#         price=26950.0,
+#         qty=1,
+#         executed_at=datetime.now(),
+#         account_id=1,
+#         order_id=999,
+#     )
+#
+#     return {"ok": True}
 
 @router.post("/protections", response_model=dict)
 def create_protections(
@@ -569,6 +575,48 @@ def close_all(
     except Exception:
         db.rollback()
         raise
+
+@router.get("/price/stream")
+async def stream_prices(request: Request):
+    q = PriceBroadcaster.subscribe()
+
+    async def event_generator():
+        try:
+            while True:
+                if await request.is_disconnected():
+                    break
+
+                try:
+                    event = await asyncio.wait_for(q.get(), timeout=1.0)
+                except asyncio.TimeoutError:
+                    yield ":\n\n"
+                    continue
+
+                yield f"data: {json.dumps(event, ensure_ascii=False)}\n\n"
+        finally:
+            PriceBroadcaster.unsubscribe(q)
+
+    return StreamingResponse(
+        event_generator(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+        },
+    )
+@router.post("/orderbook/symbol")
+def set_orderbook_symbol(req: OrderBookSymbolRequest):
+    if not ls_realtime_manager.ls_ws_client:
+        raise HTTPException(500, "LS WS not initialized")
+    print("~~~~~orderbook symbol change start~~~~~~~~~")
+    print(req.symbol)
+    ls_realtime_manager.ls_ws_client.set_ovc_symbol(req.symbol)
+    return {"ok": True, "symbol": req.symbol}
+
+@router.get("/fx/rates")
+def get_fx_rates():
+    return FXService.get_all()
+
 
 
 

@@ -1,3 +1,4 @@
+import time
 import requests
 from backend_ls.app.ls_api.ls_auth_api import LSTokenManager
 from backend_ls.app.core import ls_config_core
@@ -16,10 +17,10 @@ def call_3105(symbols: list[str]):
         "tr_cd": "o3105",
         "tr_cont": "N",
         "tr_cont_key": "",
-        "mac_address":""
+        "mac_address": ""
     }
 
-    for symbol in symbols:
+    for idx, symbol in enumerate(symbols, start=1):
         body = {
             "o3105InBlock": {
                 "symbol": symbol
@@ -28,7 +29,7 @@ def call_3105(symbols: list[str]):
 
         try:
             res = requests.post(url, headers=headers, json=body, timeout=10)
-            print(res.status_code)
+
             if res.status_code != 200:
                 raise RuntimeError(res.text)
 
@@ -42,10 +43,18 @@ def call_3105(symbols: list[str]):
                 print(f"⚠ 3105 EMPTY [{symbol}]")
 
         except Exception as e:
-            # 🔥 핵심: 절대 raise 하지 않는다
+            # 🔥 핵심: 실패해도 절대 중단하지 않는다
             print(f"✘ 3105 SKIP [{symbol}] → {e}")
             failed.append(symbol)
-            continue
+
+        # -------------------------------------------------
+        # 🔑 LS 호출 제한 대응 (핵심)
+        # -------------------------------------------------
+        time.sleep(0.25)   # 0.2~0.3 권장
+
+        # 추가 안전장치: 일정 건수마다 숨 고르기
+        if idx % 20 == 0:
+            time.sleep(1.0)
 
     print(f"3105 RESULT → success={len(rows)}, failed={len(failed)}")
     return rows

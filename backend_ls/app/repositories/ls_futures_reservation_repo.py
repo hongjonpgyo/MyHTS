@@ -126,7 +126,7 @@ class ReservationRepo:
         return True
 
     @staticmethod
-    def cancel_waiting_by_symbol(self, db: Session, account_id: int, symbol: str) -> int:
+    def cancel_waiting_by_symbol(db: Session, account_id: int, symbol: str) -> int:
         q = (
             db.query(OrderReservation)
             .filter(OrderReservation.account_id == account_id)

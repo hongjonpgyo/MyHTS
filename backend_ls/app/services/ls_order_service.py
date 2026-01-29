@@ -1,8 +1,10 @@
 # backend_ls/app/services/ls_order_service.py
+from decimal import Decimal
 
 from fastapi import HTTPException
 
 from backend_ls.app.cache.ls_price_cache import ls_price_cache
+from backend_ls.app.models.ls_futures_execution_model import Execution
 from backend_ls.app.models.ls_futures_order_model import Order
 from backend_ls.app.repositories.ls_futures_order_repo import order_repo
 from backend_ls.app.schemas.ls_order_schema import OrderCreate
@@ -44,13 +46,8 @@ class LSOrderService:
     @staticmethod
     def _create_market_order(db: Session, payload: OrderCreate):
         last_price = ls_price_cache.get_last_price(payload.symbol)
-        print(f"MARKET ORDER LAST PRICE : {last_price}")
-
         if last_price is None:
-            raise HTTPException(
-                status_code=409,
-                detail="시세 미수신 상태에서는 시장가 주문이 불가합니다."
-            )
+            raise HTTPException(409, "시세 미수신 상태")
 
         order = Order(
             account_id=int(payload.account_id),
@@ -60,20 +57,19 @@ class LSOrderService:
             qty=payload.qty,
             request_price=None,
             source=payload.source,
-            status="OPEN",
+            status="OPEN",  # 🔥 무조건 OPEN
         )
 
         db.add(order)
         db.flush()  # order_id 확보
 
-        # 즉시 체결
-        ExecutionSimulator.on_price_tick(
+        # 🔥 여기서만 MARKET 체결
+        ExecutionSimulator.fill_market_order(
             db=db,
-            symbol=payload.symbol,
+            order=order,
             last_price=last_price,
         )
 
-        # db.commit()
         db.refresh(order)
         return order
 
