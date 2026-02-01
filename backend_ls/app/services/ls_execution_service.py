@@ -91,3 +91,37 @@ class LSExecutionService:
         )
 
         return execution
+
+    @staticmethod
+    def get_my_executions(
+            db: Session,
+            user_id: int,
+            account_id: int,
+            limit: int = 200,
+    ):
+        rows = (
+            db.query(Execution)
+            .filter(
+                Execution.account_id == account_id
+            )
+            .order_by(Execution.created_at.desc())
+            .limit(limit)
+            .all()
+        )
+
+        return [
+            {
+                "exec_id": r.exec_id,
+                "symbol": r.symbol,
+                "side": r.side,
+                "price": float(r.price),
+                "qty": float(r.qty),
+                "exec_type": r.exec_type,
+                "source": r.source,
+                "created_at": r.created_at.isoformat(),
+            }
+            for r in rows
+        ]
+
+
+ls_execution_service = LSExecutionService()

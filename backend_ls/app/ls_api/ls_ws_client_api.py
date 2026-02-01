@@ -1,6 +1,7 @@
 # backend_ls/app/ls_api/ls_ws_client_api.py
 import json
 import threading
+import time
 import traceback
 
 import websocket
@@ -11,10 +12,7 @@ from backend_ls.app.db.ls_db import SessionLocal
 from backend_ls.app.ls_api.ls_auth_api import LSTokenManager
 from backend_ls.app.services.ls_auth_service import ls_auth_service
 from backend_ls.app.core.ls_config_core import LS_WS_URL
-from backend_ls.app.services.ls_execution_simulator_service import ExecutionSimulator
 from backend_ls.app.services.ls_market_tick_service import LSMarketTickService
-from backend_ls.app.services.ls_reservation_trigger_service import LSReservationTriggerService
-
 
 class LSWebSocketClient:
     def __init__(self):
@@ -23,6 +21,50 @@ class LSWebSocketClient:
         self.subscribed = set()
         self.current_ovc_symbol: str | None = None
 
+        self._stop = False
+        self._thread = None
+
+    def start(self):
+        if self._thread and self._thread.is_alive():
+            print("[LS WS] already running")
+            return
+
+        self._stop = False
+        self._thread = threading.Thread(
+            target=self.run,
+            daemon=True
+        )
+        self._thread.start()
+
+    def run(self):
+        while not self._stop:
+            try:
+                # 🔥 토큰 유효성 보장
+                if not LSTokenManager.get_token():
+                    print("[LS WS] token missing → relogin")
+                    ls_auth_service.login()
+
+                print("[LS WS] connecting...")
+                self._connect_once()
+
+            except Exception as e:
+                print("[LS WS] run error:", e)
+                traceback.print_exc()
+
+            # 🔁 재연결 대기
+            print("[LS WS] retry in 5s")
+            for _ in range(5):
+                if self._stop:
+                    return
+                time.sleep(1)
+
+    def stop(self):
+        self._stop = True
+        try:
+            if self.ws:
+                self.ws.close()
+        except Exception:
+            pass
 
     @staticmethod
     def _pad_tr_key(key: str, length: int = 8) -> str:
@@ -78,23 +120,19 @@ class LSWebSocketClient:
     # -------------------------------------------------
     # ERROR / CLOSE
     # -------------------------------------------------
-    def on_error(ws, error):
+    def on_error(self, ws, error):
+        self.connected = False
         print("[LS WS] Error:", error)
 
-    # backend_ls/app/ls_api/ls_ws_client_api.py
+    def on_close(self, ws, code, msg):
+        self.connected = False
+        print("[LS WS] Closed", code, msg)
+
 
     def close(self):
-        if self.ws:
-            try:
-                self.ws.close()
-            except Exception:
-                pass
-            self.ws = None
+        self.stop()
 
-    # -------------------------------------------------
-    # CONNECT
-    # -------------------------------------------------
-    def connect(self):
+    def _connect_once(self):
         self.ws = websocket.WebSocketApp(
             LS_WS_URL,
             on_open=self.on_open,
@@ -103,12 +141,11 @@ class LSWebSocketClient:
             on_close=self.on_close,
         )
 
-        t = threading.Thread(
-            target=self.ws.run_forever,
-            kwargs={"sslopt": {"cert_reqs": 0}},
-            daemon=True
+        self.ws.run_forever(
+            sslopt={"cert_reqs": 0},
+            ping_interval=30,
+            ping_timeout=10,
         )
-        t.start()
 
     def handle_realtime_data(self, header, body):
         tr_cd = header.get("tr_cd")
@@ -175,10 +212,6 @@ class LSWebSocketClient:
         self.ws.send(json.dumps(msg))
 
         print(f"[LS WS] Subscribe sent {tr_cd} {repr(tr_key)}")
-
-    def on_close(self, ws, code, msg):
-        self.connected = False
-        print("[LS WS] Closed", code, msg)
 
     @staticmethod
     def on_price_tick(tick):

@@ -25,6 +25,7 @@ from backend_ls.app.schemas.ls_order_schema import OrderResponse
 from backend_ls.app.schemas.ls_position_schema import PositionOut, ClosePositionResponse, ClosePositionRequest
 from backend_ls.app.schemas.ls_protection_schema import ProtectionCreate, ProtectionCancelRequest
 from backend_ls.app.schemas.ls_reservation_schema import ReservationOut, ReservationCreate
+from backend_ls.app.services.ls_execution_service import LSExecutionService, ls_execution_service
 from backend_ls.app.services.fx_service import FXService
 from backend_ls.app.services.ls_account_service import LSAccountService
 from backend_ls.app.services.ls_watchlist_factory import get_watchlist_provider
@@ -296,7 +297,7 @@ def delete_favorite(
     if not user_id:
         raise HTTPException(status_code=401, detail="Invalid token")
 
-    ok = ls_auth_service.remove(db, user_id, symbol_code)
+    ok = ls_favorite_service.remove(db, user_id, symbol_code)
     if not ok:
         raise HTTPException(status_code=404, detail="Not found")
 
@@ -341,6 +342,21 @@ async def stream_executions(request: Request):
             "Connection": "keep-alive",
         },
     )
+
+@router.get("/executions/my/{account_id}")
+def executions_my(
+    account_id: int,
+    db: Session = Depends(get_db),
+    authorization: str = Header(...),
+):
+    token = authorization.replace("Bearer ", "")
+    user_id = ls_auth_service.get_user_id_from_token(token)
+
+    if not user_id:
+        raise HTTPException(status_code=401, detail="Invalid token")
+
+    return ls_execution_service.get_my_executions(db, user_id, account_id)
+
 
 @router.post("/reservation", response_model=ReservationOut)
 def create_reservation(

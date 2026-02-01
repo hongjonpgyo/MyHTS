@@ -5,49 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fc4ef0b0-0a61-4aa1-a466-0a98435f6527" name="변경" comment=".">
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/core/global_rates.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/core/ls_realtime_manager.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/realtime/price_broadcast.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/services/fx/exim_fx_loader.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/services/fx_service.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/config/symbols.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/config/symbols.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend_ls/app/ls_api/ls_ws_client_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/ls_api/ls_ws_client_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/ls_api/tr_3105.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/ls_api/tr_3105.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend_ls/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/repositories/ls_futures_reservation_repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/repositories/ls_futures_reservation_repo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/repositories/ls_futures_watchlist_repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/repositories/ls_futures_watchlist_repo.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend_ls/app/routers/ls_futures_router.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/routers/ls_futures_router.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/services/ls_execution_simulator_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_execution_simulator_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/services/ls_futures_raw_3105_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_futures_raw_3105_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/services/ls_order_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_order_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/services/ls_watchlist_provider.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_watchlist_provider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/1249" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/1249" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/1259" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/1259" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2604" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2604" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2608" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2608" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2618" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2618" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_ls/app/services/ls_execution_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_execution_service.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/2619" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2619" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2619_fsm" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2619_fsm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2619_vm" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2619_vm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2620" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2620" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2656" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2656" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2657" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2657" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2658" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2658" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2659" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2659" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2662" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2662" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2663" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2663" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2673" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2673" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2674" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2674" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2696" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2696" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2838" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2838" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2838_fsm" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2838_fsm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2839" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2839" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/3455" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/3455" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/pg_internal.init" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/pg_internal.init" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/global/pg_control" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/global/pg_control" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/global/pg_internal.init" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/global/pg_internal.init" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/pg_subtrans/0000" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/pg_subtrans/0000" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/pg_xact/0000" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/pg_xact/0000" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -247,7 +211,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769214630130</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary=".">
+      <option name="closed" value="true" />
+      <created>1769692969398</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1769692969398</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

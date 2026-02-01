@@ -17,7 +17,7 @@ async def lifespan(app: FastAPI):
 
     try:
         ls_realtime_manager.ls_ws_client = LSWebSocketClient()
-        ls_realtime_manager.ls_ws_client.connect()
+        ls_realtime_manager.ls_ws_client.start()
         print("[LS WS] started")
     except Exception as e:
         print("[LS WS] startup error:", e)
@@ -34,7 +34,7 @@ async def lifespan(app: FastAPI):
 
     if ls_realtime_manager.ls_ws_client:
         try:
-            ls_realtime_manager.ls_ws_client.close()
+            ls_realtime_manager.ls_ws_client.stop()
             print("[LS WS] stopped")
         except Exception as e:
             print("[LS WS] shutdown error:", e)
@@ -61,4 +61,10 @@ app.include_router(ls_futures_router)
 # -------------------------
 @app.get("/health")
 def health_check():
-    return {"status": "ok"}
+    ws = ls_realtime_manager.ls_ws_client
+    return {
+        "status": "ok",
+        "ls_ws_connected": bool(ws and ws.connected),
+        "ls_ws_subscribed": len(ws.subscribed) if ws else 0,
+    }
+
