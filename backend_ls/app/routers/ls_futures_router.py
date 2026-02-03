@@ -627,6 +627,7 @@ def set_orderbook_symbol(req: OrderBookSymbolRequest):
     print("~~~~~orderbook symbol change start~~~~~~~~~")
     print(req.symbol)
     ls_realtime_manager.ls_ws_client.set_ovc_symbol(req.symbol)
+    ls_realtime_manager.ls_ws_client.set_ovh_symbol(req.symbol)
     return {"ok": True, "symbol": req.symbol}
 
 @router.get("/fx/rates")

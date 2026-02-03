@@ -5,14 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fc4ef0b0-0a61-4aa1-a466-0a98435f6527" name="변경" comment=".">
+      <change afterPath="$PROJECT_DIR$/backend_ls/app/cache/ls_orderbook_cache.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend_ls/app/ls_api/ls_ws_client_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/ls_api/ls_ws_client_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend_ls/app/routers/ls_futures_router.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/routers/ls_futures_router.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/services/ls_execution_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_execution_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/1259" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/1259" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/2619" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2619" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/pg_internal.init" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/pg_internal.init" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/global/pg_control" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/global/pg_control" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/global/pg_internal.init" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/global/pg_internal.init" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/pg_xact/0000" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/pg_xact/0000" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/postmaster.pid" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/postmaster.pid" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,34 +52,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Python.bootstrap_myhts.executor&quot;: &quot;Run&quot;,
-    &quot;Python.client.executor&quot;: &quot;Run&quot;,
-    &quot;Python.create_tests_structure.executor&quot;: &quot;Run&quot;,
-    &quot;Python.flood_trade.executor&quot;: &quot;Run&quot;,
-    &quot;Python.generate_backend_ls.executor&quot;: &quot;Run&quot;,
-    &quot;Python.generate_backend_structure.executor&quot;: &quot;Run&quot;,
-    &quot;Python.generate_hts_structures.executor&quot;: &quot;Run&quot;,
-    &quot;Python.ls_sync_ls_futures_script.executor&quot;: &quot;Run&quot;,
-    &quot;Python.ls_ws_client.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.orderbook_api.executor&quot;: &quot;Run&quot;,
-    &quot;Python.ramp_trade.executor&quot;: &quot;Run&quot;,
-    &quot;Python.reset_db.executor&quot;: &quot;Run&quot;,
-    &quot;Python.run_chaos_test.executor&quot;: &quot;Run&quot;,
-    &quot;Python.run_multi_client.executor&quot;: &quot;Run&quot;,
-    &quot;Python.sync_ls_futures.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/hongjongpyo/PycharmProjects/Ninja_MyHTS/backend_ls/app/services&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.bootstrap_myhts.executor": "Run",
+    "Python.client.executor": "Run",
+    "Python.create_tests_structure.executor": "Run",
+    "Python.flood_trade.executor": "Run",
+    "Python.generate_backend_ls.executor": "Run",
+    "Python.generate_backend_structure.executor": "Run",
+    "Python.generate_hts_structures.executor": "Run",
+    "Python.ls_sync_ls_futures_script.executor": "Run",
+    "Python.ls_ws_client.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.orderbook_api.executor": "Run",
+    "Python.ramp_trade.executor": "Run",
+    "Python.reset_db.executor": "Run",
+    "Python.run_chaos_test.executor": "Run",
+    "Python.run_multi_client.executor": "Run",
+    "Python.sync_ls_futures.executor": "Run",
+    "Python.test.executor": "Run",
+    "Python.test_ls_3101_3105_load.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/hongjongpyo/PycharmProjects/Ninja_MyHTS/backend_ls/app/services",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/backend_ls/app/services" />
@@ -219,7 +223,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769692969398</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary=".">
+      <option name="closed" value="true" />
+      <created>1769948250466</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1769948250466</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
