@@ -44,3 +44,30 @@ class PriceBroadcaster:
                 q.put_nowait(event)
             except asyncio.QueueFull:
                 pass
+
+    @classmethod
+    def publish_orderbook(
+            cls,
+            *,
+            symbol: str,
+            bids: list[dict],
+            asks: list[dict],
+            price: float | None = None,  # ✅ 추가
+            source: str | None = None,
+    ):
+        event = {
+            "event_type": "ORDERBOOK",
+            "symbol": symbol,
+            "bids": bids,
+            "asks": asks,
+            "price": price,  # ✅ 추가
+            "source": source,
+        }
+
+        for q in list(cls._subscribers):
+            try:
+                q.put_nowait(event)
+            except asyncio.QueueFull:
+                pass
+
+

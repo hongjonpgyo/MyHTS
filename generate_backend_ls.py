@@ -1,7 +1,7 @@
 # generate_backend_ls.py
 import os
 
-BASE_DIR = "backend_ls"
+BASE_DIR = "backend_ls" #sync test000
 
 DIRS = [
     "app",

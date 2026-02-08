@@ -5,17 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fc4ef0b0-0a61-4aa1-a466-0a98435f6527" name="변경" comment=".">
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/cache/ls_orderbook_cache.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_orderbook_engine.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_orderbook_service.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/tests/aws_db_test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_ls/app/cache/ls_orderbook_cache.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/cache/ls_orderbook_cache.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_ls/app/cache/ls_price_cache.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/cache/ls_price_cache.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_ls/app/db/ls_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/db/ls_db.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend_ls/app/ls_api/ls_ws_client_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/ls_api/ls_ws_client_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_ls/app/realtime/price_broadcast.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/realtime/price_broadcast.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend_ls/app/routers/ls_futures_router.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/routers/ls_futures_router.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/1259" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/1259" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/2619" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2619" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2696" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2696" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/base/16384/pg_internal.init" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/pg_internal.init" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/global/pg_control" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/global/pg_control" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/global/pg_internal.init" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/global/pg_internal.init" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/pg_xact/0000" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/pg_xact/0000" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/postmaster.pid" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/postmaster.pid" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/generate_backend_ls.py" beforeDir="false" afterPath="$PROJECT_DIR$/generate_backend_ls.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,6 +63,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.aws_db_test.executor": "Run",
     "Python.bootstrap_myhts.executor": "Run",
     "Python.client.executor": "Run",
     "Python.create_tests_structure.executor": "Run",
@@ -76,6 +85,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "SHELLCHECK.PATH": "/Users/hongjongpyo/Library/Application Support/JetBrains/PyCharmCE2025.2/plugins/Shell Script/shellcheck",
     "git-widget-placeholder": "main",
     "last_opened_file_path": "/Users/hongjongpyo/PycharmProjects/Ninja_MyHTS/backend_ls/app/services",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
@@ -90,6 +100,7 @@
       <recent name="$PROJECT_DIR$/backend_ls/app/models" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/backend_ls" />
       <recent name="$PROJECT_DIR$/backend_ls/app/services" />
       <recent name="$PROJECT_DIR$/backend_ls/app/core" />
       <recent name="$PROJECT_DIR$/backend_ls/tests" />
@@ -231,7 +242,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769948250466</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary=".">
+      <option name="closed" value="true" />
+      <created>1770126703444</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1770126703444</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

@@ -151,17 +151,29 @@ def get_all_prices():
 @router.get("/quote/{symbol}")
 def get_ls_quote(symbol: str):
     tick = ls_price_cache.get(symbol)
+
+    # ✅ 가격 미존재 = 정상 상태
     if not tick:
-        raise HTTPException(404, "price not found")
+        return {
+            "symbol": symbol,
+            "status": "NO_PRICE",   # MARKET_CLOSED / NOT_SUPPORTED 로 확장 가능
+            "price": None,
+            "change": None,
+            "change_rate": None,
+            "time": None,
+            "source": None,
+        }
 
     return {
         "symbol": tick.symbol,
+        "status": "OK",
         "price": tick.price,
         "change": tick.change,
         "change_rate": tick.change_rate,
         "time": tick.trade_time,
         "source": tick.source,
     }
+
 
 
 # -------------------------------------------------
@@ -592,8 +604,9 @@ def close_all(
         db.rollback()
         raise
 
-@router.get("/price/stream")
+@router.get("/price/live/stream")
 async def stream_prices(request: Request):
+    print("/price/stream start~~~~~~~~~")
     q = PriceBroadcaster.subscribe()
 
     async def event_generator():
@@ -633,7 +646,6 @@ def set_orderbook_symbol(req: OrderBookSymbolRequest):
 @router.get("/fx/rates")
 def get_fx_rates():
     return FXService.get_all()
-
 
 
 

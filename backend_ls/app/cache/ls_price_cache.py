@@ -4,6 +4,7 @@ class LSPriceCache:
     def __init__(self):
         self._by_symbol = {}      # symbol -> tick
         self._by_symbol_id = {}   # symbol_id -> tick
+        self._orderbook = {}
 
     def update_tick(self, tick):
         self._by_symbol[tick.symbol] = tick
@@ -42,5 +43,17 @@ class LSPriceCache:
             return float(tick.close)
 
         return None
+
+    # -----------------------
+    # ORDERBOOK (OVH)
+    # -----------------------
+    def update_orderbook(self, symbol: str, bids: list, asks: list):
+        self._orderbook[symbol] = {
+            "bids": bids,
+            "asks": asks,
+        }
+
+    def get_orderbook(self, symbol: str):
+        return self._orderbook.get(symbol)
 
 ls_price_cache = LSPriceCache()

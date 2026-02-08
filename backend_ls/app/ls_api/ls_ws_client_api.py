@@ -11,6 +11,7 @@ from backend_ls.app.cache.ls_orderbook_cache import ls_orderbook_cache
 from backend_ls.app.cache.ls_price_cache import ls_price_cache
 from backend_ls.app.db.ls_db import SessionLocal
 from backend_ls.app.ls_api.ls_auth_api import LSTokenManager
+from backend_ls.app.realtime.price_broadcast import PriceBroadcaster
 from backend_ls.app.services.ls_auth_service import ls_auth_service
 from backend_ls.app.core.ls_config_core import LS_WS_URL
 from backend_ls.app.services.ls_market_tick_service import LSMarketTickService
@@ -93,7 +94,7 @@ class LSWebSocketClient:
             body = data.get("body")
 
             tr_cd = header.get("tr_cd")
-            print(f"🔥 TR_CD = {tr_cd}")
+            # print(f"🔥 TR_CD = {tr_cd}")
             # ACK는 무시
             if body is None:
                 return
@@ -152,19 +153,28 @@ class LSWebSocketClient:
     def handle_realtime_data(self, header, body):
         tr_cd = header.get("tr_cd")
         if tr_cd == "OVC":
-            print("해외선물 실시간 체결 - OVC")
             tick = ls_ovc_to_tick(body)
 
             # 1️⃣ 가격 캐시 갱신
             ls_price_cache.update_tick(tick)
-            print(f"[TICK] {tick.symbol} {tick.price}")
+            # print(f"[TICK] {tick.symbol} {tick.price}")
 
             # 2️⃣ 🔥 체결 시뮬레이터 호출 (핵심)
             self.on_price_tick(tick)
 
         elif tr_cd == "OVH":
-            print("OVH~~~~~~~~~~~~~~")
-            self.on_orderbook_ovh(body)
+            bids, asks = self._parse_ovh_orderbook(body, depth=5)
+
+            if bids or asks:
+                symbol = body.get("symbol") or self.current_ovh_symbol.strip()
+                last_price = ls_price_cache.get_last_price(symbol.strip())
+                PriceBroadcaster.publish_orderbook(
+                    symbol=symbol.strip(),
+                    bids=bids,
+                    asks=asks,
+                    price=last_price,  # ✅ 핵심
+                    source="LS:OVH",
+                )
 
     def subscribe(self, tr_cd: str, tr_key: str):
         key = self._pad_tr_key(tr_key)
@@ -223,7 +233,6 @@ class LSWebSocketClient:
 
     def _send_subscribe(self, tr_cd: str, tr_key: str):
         token = LSTokenManager.get_token()
-        print(token)
         msg = {
             "header": {"token": token, "tr_type": "3"},
             "body": {"tr_cd": tr_cd, "tr_key": tr_key},
@@ -262,21 +271,18 @@ class LSWebSocketClient:
         if not symbol:
             return
 
-        # 🔥 1️⃣ 캐시에 덮어쓰기
         ls_orderbook_cache.update(
             symbol=symbol.strip(),
             bids=bids,
             asks=asks,
         )
-
-        # 🔍 1차 검증용 로그
-        if bids or asks:
-            # print(
-            #     "[OVH]",
-            #     "BID:", bids[0] if bids else None,
-            #     "ASK:", asks[0] if asks else None
-            # )
-            print(ls_orderbook_cache.get(symbol))
+        # 디버그
+        # if bids and asks:
+        #     print(
+        #         f"[OVH CACHE] {symbol}",
+        #         "BID:", bids[0],
+        #         "ASK:", asks[0],
+        #     )
 
     def _parse_ovh_orderbook(self, body: dict, depth: int = 5):
         bids = []

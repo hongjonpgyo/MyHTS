@@ -1,27 +1,29 @@
 # backend_ls/app/cache/ls_orderbook_cache.py
-
-import threading
-from typing import Dict, List
+from datetime import datetime
+from threading import Lock
 
 class LSOrderBookCache:
     def __init__(self):
-        self._lock = threading.Lock()
-        self._data: Dict[str, dict] = {}
+        self._data = {}
+        self._lock = Lock()
 
-    def update(self, symbol: str, bids: List[dict], asks: List[dict]):
+    def update(self, symbol: str, bids: list, asks: list):
         with self._lock:
             self._data[symbol] = {
                 "bids": bids,
                 "asks": asks,
+                "updated_at": datetime.utcnow(),
             }
 
-    def get(self, symbol: str) -> dict | None:
-        with self._lock:
-            return self._data.get(symbol)
+    def get(self, symbol: str):
+        return self._data.get(symbol)
 
-    def clear(self, symbol: str):
+    def clear(self, symbol: str | None = None):
         with self._lock:
-            self._data.pop(symbol, None)
+            if symbol:
+                self._data.pop(symbol, None)
+            else:
+                self._data.clear()
 
 
 # 🔥 싱글톤
