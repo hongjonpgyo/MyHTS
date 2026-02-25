@@ -3,6 +3,8 @@ from typing import Optional
 from sqlalchemy.orm import Session
 
 from backend_ls.app.realtime.execution_broadcast import ExecutionBroadcaster
+from backend_ls.app.realtime.price_broadcast import PriceBroadcaster
+from backend_ls.app.repositories.ls_futures_protection_repo import protection_repo
 from backend_ls.app.repositories.ls_futures_reservation_repo import reservation_repo
 from backend_ls.app.schemas.ls_order_schema import OrderCreate
 from backend_ls.app.services.ls_order_service import LSOrderService
@@ -52,6 +54,29 @@ class LSReservationTriggerService:
 
                 # 3️⃣ DONE 처리
                 reservation_repo.mark_done(db, r.reservation_id)
+
+                if r.protection_id:
+                    protection_repo.deactivate_group(
+                        db=db,
+                        account_id=r.account_id,
+                        symbol=r.symbol,
+                        side=r.side,
+                    )
+
+                    canceled = reservation_repo.cancel_oco_siblings(
+                        db,
+                        r.protection_id,
+                        r.reservation_id,
+                    )
+
+                    # 🔥 오더북 리프레시 트리거
+                    if canceled > 0:
+                        PriceBroadcaster.publish(
+                            symbol=r.symbol,
+                            price=tick_price,
+                            source="OCO_REFRESH",
+                        )
+
                 triggered_count += 1
 
             except Exception:
@@ -101,50 +126,3 @@ class LSReservationTriggerService:
 
         # ✅ create_order 내부에서 LIMIT/MARKET 분기
         return LSOrderService.create_order(db, payload)
-
-    # @staticmethod
-    # def on_price_tick(
-    #     db: Session,
-    #     symbol: str,
-    #     last_price: float,
-    # ):
-    #     """
-    #     가격 틱 발생 시 호출
-    #     """
-    #     reservations = reservation_repo.get_waiting_by_symbol(
-    #         db, symbol
-    #     )
-    #
-    #     for r in reservations:
-    #         if not LSReservationTriggerService._match(r, last_price):
-    #             continue
-    #
-    #         # 🔒 선점 (중복 방지)
-    #         if not reservation_repo.mark_triggered(db, r.reservation_id):
-    #             continue
-    #
-    #         # 실제 주문 생성
-    #         LSReservationTriggerService._execute(db, r)
-
-    # @staticmethod
-    # def _match(r, price: float) -> bool:
-    #     if r.side == "BUY":
-    #         return price <= r.trigger_price
-    #     else:
-    #         return price >= r.trigger_price
-
-    # @staticmethod
-    # def _execute(db: Session, r):
-    #     order_payload = {
-    #         "account_id": r.account_id,
-    #         "symbol": r.symbol,
-    #         "side": r.side,
-    #         "order_type": r.order_type,
-    #         "qty": r.qty,
-    #         "request_price": r.request_price,
-    #         "source": "RESERVATION",
-    #     }
-    #
-    #     LSOrderService.create_order(db, order_payload)
-    #
-    #     reservation_repo.mark_done(db, r.reservation_id)

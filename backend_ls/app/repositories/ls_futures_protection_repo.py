@@ -61,6 +61,28 @@ class ProtectionRepo:
         return updated == 1
 
     @staticmethod
+    def deactivate_group(
+            db: Session,
+            account_id: int,
+            symbol: str,
+            side: str,
+    ) -> int:
+        updated = (
+            db.query(LSFuturesProtection)
+            .filter(
+                LSFuturesProtection.account_id == account_id,
+                LSFuturesProtection.symbol == symbol,
+                LSFuturesProtection.side == side,
+                LSFuturesProtection.is_active == True,
+            )
+            .update(
+                {"is_active": False},
+                synchronize_session=False,
+            )
+        )
+        return updated
+
+    @staticmethod
     def deactivate_by_symbol(
         db: Session,
         account_id: int,

@@ -5,25 +5,41 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fc4ef0b0-0a61-4aa1-a466-0a98435f6527" name="변경" comment=".">
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_orderbook_engine.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_orderbook_service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/tests/aws_db_test.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/app/config/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/app/models/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/app/models/ls_futures_master_model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/app/models/ls_futures_watchlist_view_model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/app/realtime/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/app/realtime/balance_broadcast.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/app/repositories/ls_futures_position_repo.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/app/schemas/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/app/services/account/account_snapshot_service.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/app/session/session_manager.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/scripts/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/cache/ls_orderbook_cache.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/cache/ls_orderbook_cache.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/cache/ls_price_cache.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/cache/ls_price_cache.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend_ls/app/db/ls_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/db/ls_db.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend_ls/app/ls_api/ls_ws_client_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/ls_api/ls_ws_client_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/realtime/price_broadcast.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/realtime/price_broadcast.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_ls/app/ls_api/tr_3105.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/ls_api/tr_3105.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_ls/app/models/ls_futures_position_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/models/ls_futures_position_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_ls/app/models/ls_futures_raw_3101.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/models/ls_futures_raw_3101.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_ls/app/repositories/ls_futures_master_repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/repositories/ls_futures_master_repo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_ls/app/repositories/ls_futures_protection_repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/repositories/ls_futures_protection_repo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_ls/app/repositories/ls_futures_reservation_repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/repositories/ls_futures_reservation_repo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_ls/app/repositories/ls_futures_watchlist_repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/repositories/ls_futures_watchlist_repo.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend_ls/app/routers/ls_futures_router.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/routers/ls_futures_router.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/1259" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/1259" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2619" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2619" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/2696" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/2696" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/base/16384/pg_internal.init" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/base/16384/pg_internal.init" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_ls/app/schemas/ls_account_schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/schemas/ls_account_schema.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_ls/app/services/ls_execution_simulator_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_execution_simulator_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_ls/app/services/ls_futures_raw_3101_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_futures_raw_3101_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_ls/app/services/ls_futures_raw_3105_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_futures_raw_3105_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_ls/app/services/ls_futures_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_futures_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_ls/app/services/ls_position_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_position_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_ls/app/services/ls_reservation_trigger_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_reservation_trigger_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_ls/scripts/ls_sync_ls_futures_script.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/scripts/ls_sync_ls_futures_script.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/base/16384/pg_internal.init" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/global/pg_control" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/global/pg_control" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/global/pg_internal.init" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/global/pg_internal.init" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_data/pg_xact/0000" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/pg_xact/0000" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_data/global/pg_internal.init" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data/postmaster.pid" beforeDir="false" afterPath="$PROJECT_DIR$/db_data/postmaster.pid" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generate_backend_ls.py" beforeDir="false" afterPath="$PROJECT_DIR$/generate_backend_ls.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,44 +76,46 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python.aws_db_test.executor": "Run",
-    "Python.bootstrap_myhts.executor": "Run",
-    "Python.client.executor": "Run",
-    "Python.create_tests_structure.executor": "Run",
-    "Python.flood_trade.executor": "Run",
-    "Python.generate_backend_ls.executor": "Run",
-    "Python.generate_backend_structure.executor": "Run",
-    "Python.generate_hts_structures.executor": "Run",
-    "Python.ls_sync_ls_futures_script.executor": "Run",
-    "Python.ls_ws_client.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.orderbook_api.executor": "Run",
-    "Python.ramp_trade.executor": "Run",
-    "Python.reset_db.executor": "Run",
-    "Python.run_chaos_test.executor": "Run",
-    "Python.run_multi_client.executor": "Run",
-    "Python.sync_ls_futures.executor": "Run",
-    "Python.test.executor": "Run",
-    "Python.test_ls_3101_3105_load.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHELLCHECK.PATH": "/Users/hongjongpyo/Library/Application Support/JetBrains/PyCharmCE2025.2/plugins/Shell Script/shellcheck",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/hongjongpyo/PycharmProjects/Ninja_MyHTS/backend_ls/app/services",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.aws_db_test.executor&quot;: &quot;Run&quot;,
+    &quot;Python.bootstrap_myhts.executor&quot;: &quot;Run&quot;,
+    &quot;Python.client.executor&quot;: &quot;Run&quot;,
+    &quot;Python.create_tests_structure.executor&quot;: &quot;Run&quot;,
+    &quot;Python.flood_trade.executor&quot;: &quot;Run&quot;,
+    &quot;Python.generate_backend_ls.executor&quot;: &quot;Run&quot;,
+    &quot;Python.generate_backend_structure.executor&quot;: &quot;Run&quot;,
+    &quot;Python.generate_hts_structures.executor&quot;: &quot;Run&quot;,
+    &quot;Python.ls_futures_raw_3105_service.executor&quot;: &quot;Run&quot;,
+    &quot;Python.ls_sync_ls_futures_script.executor&quot;: &quot;Run&quot;,
+    &quot;Python.ls_ws_client.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.orderbook_api.executor&quot;: &quot;Run&quot;,
+    &quot;Python.ramp_trade.executor&quot;: &quot;Run&quot;,
+    &quot;Python.reset_db.executor&quot;: &quot;Run&quot;,
+    &quot;Python.run_chaos_test.executor&quot;: &quot;Run&quot;,
+    &quot;Python.run_multi_client.executor&quot;: &quot;Run&quot;,
+    &quot;Python.sync_ls_futures.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_ls_3101_3105_load.executor&quot;: &quot;Run&quot;,
+    &quot;Python.tr_3105.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHELLCHECK.PATH&quot;: &quot;/Users/hongjongpyo/Library/Application Support/JetBrains/PyCharmCE2025.2/plugins/Shell Script/shellcheck&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/hongjongpyo/PycharmProjects/Ninja_MyHTS/backend_ls/scripts&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/backend_ls/app/services" />
-      <recent name="$PROJECT_DIR$/backend_ls/app/config" />
+      <recent name="$PROJECT_DIR$/backend_ls/scripts" />
       <recent name="$PROJECT_DIR$/backend_ls/app/schemas" />
-      <recent name="$PROJECT_DIR$/backend_ls/app/repositories" />
+      <recent name="$PROJECT_DIR$/backend_ls/app/realtime" />
       <recent name="$PROJECT_DIR$/backend_ls/app/models" />
+      <recent name="$PROJECT_DIR$/backend_ls/app/config" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/backend_ls" />
@@ -250,7 +268,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770126703444</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary=".">
+      <option name="closed" value="true" />
+      <created>1770554356189</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1770554356189</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -263,6 +289,11 @@
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/backend_ls/app/services/ls_price_service.py</url>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/backend_binance_old/services/matching/matching_engine.py</url>
+          <line>2</line>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

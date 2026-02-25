@@ -10,6 +10,7 @@ from sqlalchemy.orm import Session
 
 from backend_ls.app.models.ls_futures_protection_model import LSFuturesProtection
 from backend_ls.app.models.ls_reservation_model import OrderReservation
+from backend_ls.app.realtime.balance_broadcast import BalanceBroadcaster
 from backend_ls.app.realtime.execution_broadcast import ExecutionBroadcaster
 from backend_ls.app.realtime.price_broadcast import PriceBroadcaster
 from backend_ls.app.repositories.ls_futures_protection_repo import protection_repo
@@ -25,6 +26,7 @@ from backend_ls.app.schemas.ls_order_schema import OrderResponse
 from backend_ls.app.schemas.ls_position_schema import PositionOut, ClosePositionResponse, ClosePositionRequest
 from backend_ls.app.schemas.ls_protection_schema import ProtectionCreate, ProtectionCancelRequest
 from backend_ls.app.schemas.ls_reservation_schema import ReservationOut, ReservationCreate
+from backend_ls.app.services.account.account_snapshot_service import AccountSnapshotService
 from backend_ls.app.services.ls_execution_service import LSExecutionService, ls_execution_service
 from backend_ls.app.services.fx_service import FXService
 from backend_ls.app.services.ls_account_service import LSAccountService
@@ -235,6 +237,32 @@ def get_positions(account_id: str, db: Session = Depends(get_db)):
 def get_position(account_id: str, symbol: str, db: Session = Depends(get_db)):
     return LSPositionService.get_position(db, account_id, symbol)
 
+# @router.get(
+#     "/accounts/{account_id}/balance",
+#     response_model=AccountBalanceOut
+# )
+# def get_account_balance(
+#     account_id: int,
+#     db: Session = Depends(get_db),
+# ):
+#     row = LSAccountService.get_balance(db, account_id)
+#     if not row:
+#         raise HTTPException(404, "account balance not found")
+#
+#     deposit = float(row.balance or 0)
+#     available = float(row.margin_available or 0)
+#     unrealized = float(row.pnl_unrealized or 0)
+#
+#     rate = (unrealized / deposit * 100) if deposit != 0 else 0.0
+#
+#     return AccountBalanceOut(
+#         account_id=row.account_id,
+#         deposit=deposit,
+#         available=available,
+#         unrealized_pnl=unrealized,
+#         unrealized_pnl_rate=rate,
+#     )
+
 @router.get(
     "/accounts/{account_id}/balance",
     response_model=AccountBalanceOut
@@ -243,22 +271,31 @@ def get_account_balance(
     account_id: int,
     db: Session = Depends(get_db),
 ):
-    row = LSAccountService.get_balance(db, account_id)
-    if not row:
-        raise HTTPException(404, "account balance not found")
+    snapshot = AccountSnapshotService.calculate(db, account_id)
+    print(snapshot)
+    return snapshot
 
-    deposit = float(row.balance or 0)
-    available = float(row.margin_available or 0)
-    unrealized = float(row.pnl_unrealized or 0)
+@router.get("/accounts/{account_id}/balance/stream")
+async def balance_stream(account_id: int, db: Session = Depends(get_db)):
 
-    rate = (unrealized / deposit * 100) if deposit != 0 else 0.0
+    async def event_generator():
+        queue = await BalanceBroadcaster.subscribe(account_id)
 
-    return AccountBalanceOut(
-        account_id=row.account_id,
-        deposit=deposit,
-        available=available,
-        unrealized_pnl=unrealized,
-        unrealized_pnl_rate=rate,
+        try:
+            # 최초 snapshot 1회 전송
+            snapshot = AccountSnapshotService.calculate(db, account_id)
+            yield f"data: {snapshot}\n\n"
+
+            while True:
+                data = await queue.get()
+                yield f"data: {data}\n\n"
+
+        finally:
+            BalanceBroadcaster.unsubscribe(account_id, queue)
+
+    return StreamingResponse(
+        event_generator(),
+        media_type="text/event-stream"
     )
 
 

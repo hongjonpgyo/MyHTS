@@ -1,7 +1,9 @@
 # backend_ls/app/services/ls_position_service.py
+
+from decimal import Decimal
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
-from collections import defaultdict
+
 from backend_ls.app.models.ls_futures_position_model import Position
 from backend_ls.app.cache.ls_price_cache import ls_price_cache
 from backend_ls.app.models.ls_futures_protection_model import LSFuturesProtection
@@ -12,115 +14,109 @@ from backend_ls.app.services.ls_order_service import LSOrderService
 
 class LSPositionService:
 
+    # ==========================================================
+    # 단일 포지션 조회 (1계좌 1종목 1행 전제)
+    # ==========================================================
     @staticmethod
     def get_position(db: Session, account_id: str, symbol: str) -> dict | None:
-        rows = (
+
+        pos = (
             db.query(Position)
             .filter(Position.account_id == int(account_id))
             .filter(Position.symbol == symbol)
-            .all()
+            .first()
         )
 
-        if not rows:
+        if not pos or pos.qty == 0:
             return None
 
-        qty = 0.0
-        cost = 0.0
-        realized = 0.0
-
-        for p in rows:
-            qty += float(p.qty)
-            cost += float(p.qty) * float(p.entry_price)
-            realized += float(p.realized_pnl)
-
-        if qty == 0:
-            return None  # 전량 청산된 상태
-
-        avg_price = cost / qty
+        qty = Decimal(str(pos.qty))
+        entry_price = Decimal(str(pos.entry_price))
+        multiplier = Decimal(str(pos.multiplier))
+        realized = Decimal(str(pos.realized_pnl))
 
         tick = ls_price_cache.get(symbol)
-        last_price = float(tick.price) if tick else 0.0
-        unrealized = (last_price - avg_price) * qty
+        last_price = Decimal(str(tick.price)) if tick else Decimal("0")
+
+        # 🔥 승수 반영
+        unrealized = (last_price - entry_price) * qty * multiplier
 
         return {
             "account_id": int(account_id),
             "symbol": symbol,
-            "qty": qty,
+            "qty": float(qty),
             "side": "LONG" if qty > 0 else "SHORT",
-            "avg_price": avg_price,
-            "last_price": last_price,
-            "unrealized_pnl": unrealized,
-            "realized_pnl": realized,
-            "total_pnl": realized + unrealized,
+            "avg_price": float(entry_price),
+            "last_price": float(last_price),
+            "unrealized_pnl": float(unrealized),
+            "realized_pnl": float(realized),
+            "total_pnl": float(realized + unrealized),
             "liquidation_price": None,
         }
 
+    # ==========================================================
+    # 전체 포지션 조회
+    # ==========================================================
     @staticmethod
     def get_positions(db: Session, account_id: str):
+
         rows = (
             db.query(Position)
             .filter(Position.account_id == int(account_id))
             .all()
         )
 
-        grouped = defaultdict(lambda: {
-            "qty": 0.0,
-            "cost": 0.0,
-            "realized_pnl": 0.0,
-        })
-
-        # -------------------------------------------------
-        # 1️⃣ 포지션 집계 (symbol 기준)
-        # -------------------------------------------------
-        for pos in rows:
-            g = grouped[pos.symbol]
-            g["qty"] += float(pos.qty)
-            g["cost"] += float(pos.qty) * float(pos.entry_price)
-            g["realized_pnl"] += float(pos.realized_pnl)
-
         results = []
 
-        # -------------------------------------------------
-        # 2️⃣ 종목별 결과 생성
-        # -------------------------------------------------
-        for symbol, g in grouped.items():
-            qty = g["qty"]
-            if qty == 0:
-                continue  # 🔥 전량 청산된 포지션 제거
+        for pos in rows:
 
-            avg_price = g["cost"] / qty
+            if pos.qty == 0:
+                continue
 
-            tick = ls_price_cache.get(symbol)
-            last_price = float(tick.price) if tick else 0.0
+            qty = Decimal(str(pos.qty))
+            entry_price = Decimal(str(pos.entry_price))
+            multiplier = Decimal(str(pos.multiplier))
+            realized = Decimal(str(pos.realized_pnl))
 
-            unrealized = (last_price - avg_price) * qty
+            tick = ls_price_cache.get(pos.symbol)
+            last_price = Decimal(str(tick.price)) if tick else Decimal("0")
+
+            unrealized = (last_price - entry_price) * qty * multiplier
 
             results.append({
                 "account_id": int(account_id),
-                "symbol": symbol,
-                "qty": qty,
+                "symbol": pos.symbol,
+                "qty": float(qty),
                 "side": "LONG" if qty > 0 else "SHORT",
-                "avg_price": avg_price,
-                "last_price": last_price,
-                "unrealized_pnl": unrealized,
-                "realized_pnl": g["realized_pnl"],
-                "total_pnl": g["realized_pnl"] + unrealized,
+                "avg_price": float(entry_price),
+                "last_price": float(last_price),
+                "unrealized_pnl": float(unrealized),
+                "realized_pnl": float(realized),
+                "total_pnl": float(realized + unrealized),
                 "liquidation_price": None,
             })
 
         return results
 
+    # ==========================================================
+    # 포지션 전량 청산
+    # ==========================================================
     @staticmethod
     def close_position(db: Session, account_id: int, symbol: str, source: str = "UI"):
-        pos = LSPositionService.get_position(db, str(account_id), symbol)
-        if not pos:
+
+        pos = (
+            db.query(Position)
+            .filter(Position.account_id == account_id)
+            .filter(Position.symbol == symbol)
+            .first()
+        )
+
+        if not pos or pos.qty == 0:
             return {"ok": True, "reason": "NO_POSITION"}
 
-        qty = float(pos["qty"])
-        if qty == 0:
-            return {"ok": True, "reason": "QTY_ZERO"}
-
+        qty = Decimal(str(pos.qty))
         close_qty = abs(int(qty))
+
         side = "SELL" if qty > 0 else "BUY"
 
         try:
@@ -141,7 +137,7 @@ class LSPositionService:
             deactivated = prot_q.count()
             prot_q.update({"is_active": False}, synchronize_session=False)
 
-            # 3️⃣ 시장가 청산 주문 (❌ commit 금지)
+            # 3️⃣ 시장가 청산 주문 생성 (commit 금지)
             payload = OrderCreate(
                 account_id=account_id,
                 symbol=symbol,
@@ -151,6 +147,7 @@ class LSPositionService:
                 request_price=None,
                 source=source,
             )
+
             order = LSOrderService.create_order(db, payload)
 
             # 4️⃣ 단일 commit
@@ -169,4 +166,3 @@ class LSPositionService:
         except Exception as e:
             db.rollback()
             raise HTTPException(400, f"close_position failed: {e}")
-

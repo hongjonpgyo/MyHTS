@@ -9,7 +9,13 @@ from sqlalchemy.orm import Session
 from backend_ls.app.models.ls_futures_order_model import Order
 from backend_ls.app.models.ls_futures_execution_model import Execution
 from backend_ls.app.models.ls_futures_position_model import Position
+from backend_ls.app.models.ls_futures_account_balance_model import LSAccountBalance
+from backend_ls.app.models.ls_futures_protection_model import LSFuturesProtection
+from backend_ls.app.realtime.balance_broadcast import BalanceBroadcaster
 from backend_ls.app.realtime.execution_broadcast import ExecutionBroadcaster
+from backend_ls.app.repositories.ls_futures_master_repo import master_repo
+from backend_ls.app.repositories.ls_futures_watchlist_repo import LSFuturesWatchlistRepository
+from backend_ls.app.services.account.account_snapshot_service import AccountSnapshotService
 
 
 class ExecutionSimulator:
@@ -103,6 +109,12 @@ class ExecutionSimulator:
         db.add(execution)
         db.flush()
 
+        ExecutionSimulator._deactivate_protections(
+            db=db,
+            account_id=order.account_id,
+            symbol=order.symbol,
+        )
+
         # 3) Position 반영
         ExecutionSimulator._update_position(db, order, price, qty)
 
@@ -121,11 +133,38 @@ class ExecutionSimulator:
             source=order.source,
         )
 
+        db.commit()
+
+        snapshot = AccountSnapshotService.calculate(db, order.account_id)
+
+        BalanceBroadcaster.publish(
+            account_id=order.account_id,
+            data=snapshot
+        )
+
+    @staticmethod
+    def _deactivate_protections(db: Session, account_id: int, symbol: str):
+        db.query(LSFuturesProtection).filter(
+            LSFuturesProtection.account_id == account_id,
+            LSFuturesProtection.symbol == symbol,
+            LSFuturesProtection.is_active == True,
+        ).update(
+            {"is_active": False},
+            synchronize_session=False,
+        )
+
     # -------------------------------------------------
     # Position update
     # -------------------------------------------------
     @staticmethod
     def _update_position(db: Session, order: Order, price: Decimal, qty: Decimal):
+
+        price = Decimal(str(price))
+        qty = Decimal(str(qty))
+
+        delta_qty = qty if order.side == "BUY" else -qty
+
+        # 기존 포지션 조회
         pos = (
             db.query(Position)
             .filter(
@@ -135,61 +174,106 @@ class ExecutionSimulator:
             .one_or_none()
         )
 
-        price = Decimal(str(price))
-        qty = Decimal(str(qty))
+        # 마스터 정보 조회 (multiplier / 증거금)
+        row = LSFuturesWatchlistRepository.get_by_symbol(db, order.symbol)
+        if not row:
+            raise Exception(f"Master not found for {order.symbol}")
 
-        # BUY = +, SELL = -
-        delta_qty = qty if order.side == "BUY" else -qty
+        multiplier = Decimal(str(row["multiplier"]))
+        opng_mgn = Decimal(str(row["opng_mgn"]))
 
-        # 신규 포지션
+        # -------------------------------------------------
+        # 1️⃣ 신규 포지션
+        # -------------------------------------------------
         if not pos:
-            pos = Position(
+            db.add(Position(
                 account_id=order.account_id,
                 symbol=order.symbol,
                 qty=delta_qty,
                 entry_price=price,
                 realized_pnl=Decimal("0"),
-            )
-            db.add(pos)
+                multiplier=multiplier,
+                opng_mgn=opng_mgn,
+            ))
+            db.flush()
+            return
+
+        if pos and Decimal(str(pos.qty)) == 0:
+            pos.qty = delta_qty
+            pos.entry_price = price
+            pos.realized_pnl = Decimal("0")
+            pos.multiplier = multiplier
+            pos.opng_mgn = opng_mgn
+            db.flush()
             return
 
         old_qty = Decimal(str(pos.qty))
-        entry_price = Decimal(str(pos.entry_price))
+        old_entry = Decimal(str(pos.entry_price))
+        realized = Decimal(str(pos.realized_pnl or 0))
+
         new_qty = old_qty + delta_qty
 
-        # 같은 방향 → 평균가
+        # -------------------------------------------------
+        # 2️⃣ 같은 방향 (추가 진입)
+        # -------------------------------------------------
         if old_qty * delta_qty > 0:
-            total_cost = (entry_price * abs(old_qty)) + (price * abs(delta_qty))
+            total_cost = (
+                    old_entry * abs(old_qty)
+                    + price * abs(delta_qty)
+            )
+
             pos.qty = new_qty
             pos.entry_price = total_cost / abs(new_qty)
+
             return
 
-        # 부분 청산
-        if abs(delta_qty) < abs(old_qty):
-            realized = (price - entry_price) * abs(delta_qty)
-            if old_qty < 0:
-                realized *= -1
-            pos.realized_pnl += realized
-            pos.qty = new_qty
-            return
+        # -------------------------------------------------
+        # 3️⃣ 반대 방향 (청산 포함)
+        # -------------------------------------------------
+        close_qty = min(abs(old_qty), abs(delta_qty))
+        direction = Decimal("1") if old_qty > 0 else Decimal("-1")
 
-        # 전량 청산
-        if abs(delta_qty) == abs(old_qty):
-            realized = (price - entry_price) * abs(old_qty)
-            if old_qty < 0:
-                realized *= -1
-            pos.realized_pnl += realized
+        realized_pnl = (
+                (price - old_entry)
+                * close_qty
+                * multiplier
+                * direction
+        )
+
+        # 🔥 계좌 잔고에 즉시 반영
+        account = (
+            db.query(LSAccountBalance)
+            .filter(LSAccountBalance.account_id == order.account_id)
+            .one()
+        )
+
+        account.balance = Decimal(str(account.balance)) + realized_pnl
+
+        realized += realized_pnl
+
+        # -------------------------------------------------
+        # 4️⃣ 완전 청산
+        # -------------------------------------------------
+        if new_qty == 0:
             pos.qty = Decimal("0")
             pos.entry_price = Decimal("0")
+            pos.realized_pnl = Decimal("0")  # 이미 계좌에 반영했으므로 초기화
             return
 
-        # 포지션 전환
-        realized = (price - entry_price) * abs(old_qty)
-        if old_qty < 0:
-            realized *= -1
-        pos.realized_pnl += realized
+        # -------------------------------------------------
+        # 5️⃣ 포지션 전환 (롱 → 숏 or 반대)
+        # -------------------------------------------------
+        if old_qty * new_qty < 0:
+            pos.qty = new_qty
+            pos.entry_price = price  # 🔥 새 방향은 체결가가 평단
+            pos.realized_pnl = Decimal("0")
+            return
+
+        # -------------------------------------------------
+        # 6️⃣ 부분 청산 (방향 유지)
+        # -------------------------------------------------
         pos.qty = new_qty
-        pos.entry_price = price
+        pos.realized_pnl = realized
 
     # -------------------------------------------------
     # Test helper

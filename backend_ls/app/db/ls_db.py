@@ -4,7 +4,8 @@ import os
 
 DB_USER = os.getenv("DB_USER", "hts_admin")
 DB_PASS = os.getenv("DB_PASS", "hts_admin_pw")
-DB_HOST = os.getenv("DB_HOST", "172.31.3.55")
+# DB_HOST = os.getenv("DB_HOST", "172.31.3.55")
+DB_HOST = os.getenv("DB_HOST", "18.183.56.162")
 DB_PORT = os.getenv("DB_PORT", "5432")
 DB_NAME = os.getenv("DB_NAME", "hts_real_db")
 

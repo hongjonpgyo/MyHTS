@@ -1,5 +1,6 @@
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.orm import Session
+from sqlalchemy.testing.provision import upsert
 
 from backend_ls.app.models.ls_futures_raw_3105 import LSFuturesRaw3105
 
@@ -24,6 +25,8 @@ class LSFuturesRaw3105Service:
             symbol = row.get("Symbol")
             if not symbol:
                 continue
+
+            print(row)
 
             stmt = insert(LSFuturesRaw3105).values(
                 symbol=symbol,
@@ -55,7 +58,7 @@ class LSFuturesRaw3105Service:
                 seq_no=row.get("SeqNo"),
 
                 lstng_dt=row.get("LstngDt"),
-                mrtr_dt=row.get("MrtrDt"),
+                mtrt_dt=row.get("MtrtDt"),
                 fnl_dl_dt=row.get("FnlDlDt"),
                 fst_trsf_dt=row.get("FstTrsfDt"),
 

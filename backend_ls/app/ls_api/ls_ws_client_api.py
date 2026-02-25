@@ -157,7 +157,6 @@ class LSWebSocketClient:
 
             # 1️⃣ 가격 캐시 갱신
             ls_price_cache.update_tick(tick)
-            # print(f"[TICK] {tick.symbol} {tick.price}")
 
             # 2️⃣ 🔥 체결 시뮬레이터 호출 (핵심)
             self.on_price_tick(tick)
@@ -216,6 +215,14 @@ class LSWebSocketClient:
         # 신규 OVC 구독
         self.subscribe("OVC", symbol)
         self.current_ovc_symbol = symbol
+
+    def subscribe_watchlist_symbol(self, symbol: str):
+        symbol = self._pad_tr_key(symbol)
+
+        if ("OVC", symbol) in self.subscribed:
+            return
+
+        self.subscribe("OVC", symbol)
 
     def set_ovh_symbol(self, symbol: str):
         symbol = self._pad_tr_key(symbol)

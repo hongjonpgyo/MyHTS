@@ -22,7 +22,7 @@ class LSFuturesRaw3101Service:
                 unt_prc=r.get("UntPrc"),
                 mn_chg_amt=r.get("MnChgAmt"),
                 rglt_fctr=r.get("RgltFctr"),
-                crtr_pr_amt=r.get("CrtrPrAmt"),
+                ctrt_pr_amt=r.get("CtrtPrAmt"),
 
                 gds_cd=r["GdsCd"],
                 lstng_yr=r["LstngYr"],

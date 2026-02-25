@@ -22,6 +22,8 @@ class LSFuturesService:
     ):
         created_rows = []
 
+        groud_id = None
+
         for leg in payload.protections:
             # -----------------------------
             # 1️⃣ 기존 보호주문 비활성화
@@ -52,6 +54,9 @@ class LSFuturesService:
             db.add(protection)
             db.flush()  # ⭐ protection.id 확보
 
+            if groud_id is None:
+                groud_id = protection.id
+
             # -----------------------------
             # 3️⃣ 보호주문 → 예약주문 변환
             # -----------------------------
@@ -78,12 +83,11 @@ class LSFuturesService:
                 request_price=None,
 
                 # linked_position_id=payload.linked_position_id,
-                protection_id=protection.id,  # ⭐ 핵심
+                protection_id=groud_id,
                 status="WAITING",
             )
 
             db.add(reservation)
-
             created_rows.append(protection)
 
         db.commit()

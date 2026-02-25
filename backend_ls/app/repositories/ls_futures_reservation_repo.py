@@ -137,5 +137,25 @@ class ReservationRepo:
         q.update({"status": "CANCELED"}, synchronize_session=False)
         return count
 
+    @staticmethod
+    def cancel_oco_siblings(
+            db: Session,
+            protection_id: int,
+            filled_reservation_id: int,
+    ) -> int:
+
+        q = (
+            db.query(OrderReservation)
+            .filter(OrderReservation.protection_id == protection_id)
+            .filter(OrderReservation.reservation_id != filled_reservation_id)
+            .filter(OrderReservation.status == "WAITING")
+        )
+
+        count = q.count()
+
+        q.update({"status": "CANCELED"}, synchronize_session=False)
+
+        return count
+
 reservation_repo = ReservationRepo()
 

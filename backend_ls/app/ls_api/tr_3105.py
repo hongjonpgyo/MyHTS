@@ -36,6 +36,8 @@ def call_3105(symbols: list[str]):
             data = res.json()
             out = data.get("o3105OutBlock")
 
+            print(out)
+
             if out:
                 rows.append(out)
                 print(f"✔ 3105 OK [{symbol}]")
@@ -58,3 +60,6 @@ def call_3105(symbols: list[str]):
 
     print(f"3105 RESULT → success={len(rows)}, failed={len(failed)}")
     return rows
+
+if __name__ == "__main__":
+    call_3105(['HSIG26  '])

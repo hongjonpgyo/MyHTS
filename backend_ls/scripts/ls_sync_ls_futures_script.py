@@ -16,8 +16,10 @@ def run():
 
         symbols = [row["Symbol"] for row in out_3101]
 
+        print(symbols)
+
         print("▶ 3105 CALL")
-        out_3105 = call_3105(symbols)
+        out_3105 = call_3105('HSIG26')
 
         cnt_3105 = LSFuturesRaw3105Service.upsert_from_3105(db, out_3105)
 
@@ -25,6 +27,7 @@ def run():
         print(f"3105 UPSERT = {cnt_3105}")
 
         print("✅ SYNC DONE")
+
 
     finally:
         db.close()

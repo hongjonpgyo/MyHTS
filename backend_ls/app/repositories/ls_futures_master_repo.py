@@ -1,13 +1,42 @@
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
+from backend_ls.app.models.ls_futures_master_model import LSFuturesMaster
+
 
 class LSFuturesMasterRepository:
     """
     ls_futures_master VIEW 전용 Repository
     (3101 + 3105 JOIN 결과)
     """
+    def get_by_symbol(self, db: Session, symbol: str) -> LSFuturesMaster | None:
+        return (
+            db.query(LSFuturesMaster)
+            .filter(LSFuturesMaster.symbol == symbol)
+            .first()
+        )
 
+    def get_required_fields(self, db: Session, symbol: str) -> dict | None:
+        row = (
+            db.query(
+                LSFuturesMaster.symbol,
+                LSFuturesMaster.multiplier,
+                LSFuturesMaster.opng_mgn,
+                LSFuturesMaster.mntnc_mgn,
+            )
+            .filter(LSFuturesMaster.symbol == symbol)
+            .first()
+        )
+
+        if not row:
+            return None
+
+        return {
+            "symbol": row.symbol,
+            "multiplier": row.multiplier,
+            "opng_mgn": row.opng_mgn,
+            "mntnc_mgn": row.mntnc_mgn,
+        }
     @staticmethod
     def fetch_watchlist(
         db: Session,
@@ -62,3 +91,5 @@ class LSFuturesMasterRepository:
             text(sql),
             params,
         ).mappings().all()
+
+master_repo = LSFuturesMasterRepository()

@@ -20,7 +20,7 @@ class LSFuturesRaw3101(Base):
     unt_prc = Column(Numeric(15, 9))
     mn_chg_amt = Column(Numeric(15, 9))
     rglt_fctr = Column(Numeric(15, 10))
-    crtr_pr_amt = Column(Numeric(15, 2))
+    ctrt_pr_amt = Column(Numeric(15, 2))
 
     gds_cd = Column(String(3))
     lstng_yr = Column(String(4))
