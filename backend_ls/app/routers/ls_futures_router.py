@@ -8,7 +8,6 @@ from fastapi import APIRouter, HTTPException, Depends, Header
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
-from backend_ls.app.models.ls_futures_protection_model import LSFuturesProtection
 from backend_ls.app.models.ls_reservation_model import OrderReservation
 from backend_ls.app.realtime.balance_broadcast import BalanceBroadcaster
 from backend_ls.app.realtime.execution_broadcast import ExecutionBroadcaster
@@ -29,7 +28,6 @@ from backend_ls.app.schemas.ls_reservation_schema import ReservationOut, Reserva
 from backend_ls.app.services.account.account_snapshot_service import AccountSnapshotService
 from backend_ls.app.services.ls_execution_service import LSExecutionService, ls_execution_service
 from backend_ls.app.services.fx_service import FXService
-from backend_ls.app.services.ls_account_service import LSAccountService
 from backend_ls.app.services.ls_watchlist_factory import get_watchlist_provider
 from backend_ls.app.services.ls_watchlist_provider import ConfigWatchlistProvider
 from backend_ls.app.services.ls_futures_service import LSFuturesService
@@ -123,12 +121,18 @@ async def get_watchlist(
     db: Session = Depends(get_db),
 ):
     provider = get_watchlist_provider(db)
-    return await provider.get_rows()
-    # return LSFuturesService.get_watchlist(
-    #     db,
-    #     only_has_price=only_has_price,
-    #     limit=limit,
-    # )
+    rows = await provider.get_rows()
+
+    print(rows)
+
+    # 🔥 Watchlist 종목들 OVC 구독(실시간 체결 시세)
+    for r in rows:
+        # provider row 형태에 맞게 symbol 키만 맞춰주면 됨
+        sym = (r.get("symbol") if isinstance(r, dict) else getattr(r, "symbol", None))
+        if sym:
+            ls_realtime_manager.ls_ws_client.subscribe_watchlist_symbol(sym)
+
+    return rows
 
 @router.get("/config/watchlist")
 def get_config_watchlist():
@@ -196,7 +200,6 @@ def get_ls_time():
 # -------------------------------------------------
 @router.post("/orders", response_model=OrderResponse)
 def create_order(payload: OrderCreate, db: Session = Depends(get_db)):
-    print("🔥 ORDER PAYLOAD:", payload.dict())
     order = LSOrderService.create_order(db, payload)
     db.commit()
     return order
@@ -272,7 +275,6 @@ def get_account_balance(
     db: Session = Depends(get_db),
 ):
     snapshot = AccountSnapshotService.calculate(db, account_id)
-    print(snapshot)
     return snapshot
 
 @router.get("/accounts/{account_id}/balance/stream")
@@ -658,7 +660,7 @@ async def stream_prices(request: Request):
                     yield ":\n\n"
                     continue
 
-                yield f"data: {json.dumps(event, ensure_ascii=False)}\n\n"
+                yield f"data: {json.dumps(event, ensure_ascii=False, default=float)}\n\n"
         finally:
             PriceBroadcaster.unsubscribe(q)
 

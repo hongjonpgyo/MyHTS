@@ -1,4 +1,5 @@
 # backend_ls/app/services/ls_order_service.py
+import time
 from decimal import Decimal
 
 from fastapi import HTTPException
@@ -49,6 +50,7 @@ class LSOrderService:
         if last_price is None:
             raise HTTPException(409, "시세 미수신 상태")
 
+        # 1️⃣ OPEN 상태로 먼저 생성
         order = Order(
             account_id=int(payload.account_id),
             symbol=payload.symbol,
@@ -57,13 +59,27 @@ class LSOrderService:
             qty=payload.qty,
             request_price=None,
             source=payload.source,
-            status="OPEN",  # 🔥 무조건 OPEN
+            status="OPEN",
         )
 
         db.add(order)
         db.flush()  # order_id 확보
+        db.commit()  # 🔥 반드시 commit → 미체결 조회 가능
 
-        # 🔥 여기서만 MARKET 체결
+        # 🔥 (선택) OPEN 이벤트 push
+        ExecutionBroadcaster.publish(
+            exec_type="ORDER",
+            account_id=order.account_id,
+            symbol=order.symbol,
+            side=order.side,
+            price=float(last_price),
+            qty=float(order.qty),
+            order_id=order.order_id,
+            executed_at=None,
+            source=order.source,
+        )
+
+        # 2️⃣ 실제 체결 (DONE 처리)
         ExecutionSimulator.fill_market_order(
             db=db,
             order=order,
@@ -82,7 +98,7 @@ class LSOrderService:
                 "order_id": o.order_id,
                 "symbol": o.symbol,
                 "side": o.side,
-                "price": float(o.request_price),
+                "price": float(o.request_price) if o.request_price is not None else None,
                 "qty": o.qty,
                 "status": o.status,
                 "created_at": o.created_at,
@@ -105,7 +121,7 @@ class LSOrderService:
             o.status = "CANCELED"
             o.reason = "USER_CANCEL"
 
-        # db.commit()
+        db.commit()  # 🔥 반드시 필요
 
         return {
             "ok": True,

@@ -24,18 +24,21 @@ class PriceBroadcaster:
 
     @classmethod
     def publish(
-        cls,
-        *,
-        symbol: str,
-        price: float,
-        diff: float | None = None,
-        source: str | None = None,
+            cls,
+            *,
+            symbol: str,
+            price: float,
+            diff: float | None = None,
+            change_rate: float | None = None,
+            source: str | None = None,
+            event_type: str = "PRICE",
     ):
         event: Dict[str, Any] = {
             "symbol": symbol,
             "price": float(price),
-            "diff": diff,
-            "event_type": "PRICE",
+            "diff": diff,  # 전일대비 가격
+            "change_rate": change_rate,  # 등락률 %
+            "event_type": event_type,
             "source": source,
         }
 
@@ -53,6 +56,7 @@ class PriceBroadcaster:
             bids: list[dict],
             asks: list[dict],
             price: float | None = None,  # ✅ 추가
+            tick_size : float | None = None,
             source: str | None = None,
     ):
         event = {
@@ -61,6 +65,7 @@ class PriceBroadcaster:
             "bids": bids,
             "asks": asks,
             "price": price,  # ✅ 추가
+            "tick_size": tick_size,
             "source": source,
         }
 

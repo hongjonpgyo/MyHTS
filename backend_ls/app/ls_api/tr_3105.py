@@ -34,6 +34,9 @@ def call_3105(symbols: list[str]):
                 raise RuntimeError(res.text)
 
             data = res.json()
+
+            print(data)
+            print("OUTBLOCK:", data.keys())
             out = data.get("o3105OutBlock")
 
             print(out)

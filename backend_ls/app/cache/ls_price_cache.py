@@ -1,10 +1,13 @@
 # backend_ls/app/cache/ls_price_cache.py
+from decimal import Decimal, ROUND_DOWN
+
 
 class LSPriceCache:
     def __init__(self):
         self._by_symbol = {}      # symbol -> tick
         self._by_symbol_id = {}   # symbol_id -> tick
         self._orderbook = {}
+        self._tick_size = {}
 
     def update_tick(self, tick):
         self._by_symbol[tick.symbol] = tick
@@ -55,5 +58,28 @@ class LSPriceCache:
 
     def get_orderbook(self, symbol: str):
         return self._orderbook.get(symbol)
+
+    # =====================================================
+    # 🔥 Tick Size
+    # =====================================================
+    def set_tick_size(self, symbol: str, tick_size: float | str | Decimal):
+        print("set_tick_size : ", tick_size)
+        self._tick_size[symbol] = Decimal(str(tick_size))
+
+    def get_tick_size(self, symbol: str) -> Decimal:
+        return self._tick_size.get(symbol, Decimal("1"))  # 기본 1
+
+    def normalize_price(self, symbol: str, price: float | Decimal) -> float:
+        tick_size = self.get_tick_size(symbol)
+
+        price_d = Decimal(str(price))
+
+        normalized = (
+            (price_d / tick_size)
+            .to_integral_value(rounding=ROUND_DOWN)
+            * tick_size
+        )
+
+        return float(normalized)
 
 ls_price_cache = LSPriceCache()

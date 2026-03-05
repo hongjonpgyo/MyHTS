@@ -13,6 +13,7 @@ from sqlalchemy.orm import Session
 
 from backend_ls.app.cache.ls_price_cache import ls_price_cache
 from backend_ls.app.repositories.ls_futures_position_repo import positionRepo
+from backend_ls.app.services.fx_service import FXService
 from backend_ls.app.services.ls_account_service import LSAccountService
 
 # backend_ls/app/services/account/account_snapshot_service.py
@@ -80,10 +81,21 @@ class AccountSnapshotService:
             if current_price is not None:
                 current_price = Decimal(str(current_price))
 
-                pnl = (current_price - entry_price) * qty * multiplier
-                total_unrealized += pnl
+                pnl_foreign = (
+                        (current_price - entry_price)
+                        * qty
+                        * multiplier
+                )
 
-                total_position_value += abs(entry_price * qty * multiplier)
+                fx = FXService.get_rate(pos.currency)
+
+                pnl_krw = pnl_foreign * fx
+
+                total_unrealized += pnl_krw
+
+                total_position_value += abs(
+                    entry_price * qty * multiplier * fx
+                )
 
         # ---------------------------------
         # 4️⃣ 계좌 요약 계산

@@ -13,6 +13,7 @@ class PositionOut(BaseModel):
     unrealized_pnl: float
     realized_pnl: float
     total_pnl: float
+    liquidation_price: Optional[float]
 
     class Config:
         from_attributes = True

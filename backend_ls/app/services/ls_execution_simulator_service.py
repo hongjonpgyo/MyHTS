@@ -16,6 +16,7 @@ from backend_ls.app.realtime.execution_broadcast import ExecutionBroadcaster
 from backend_ls.app.repositories.ls_futures_master_repo import master_repo
 from backend_ls.app.repositories.ls_futures_watchlist_repo import LSFuturesWatchlistRepository
 from backend_ls.app.services.account.account_snapshot_service import AccountSnapshotService
+from backend_ls.app.services.fx_service import FXService
 
 
 class ExecutionSimulator:
@@ -164,7 +165,9 @@ class ExecutionSimulator:
 
         delta_qty = qty if order.side == "BUY" else -qty
 
+        # -------------------------------------------------
         # 기존 포지션 조회
+        # -------------------------------------------------
         pos = (
             db.query(Position)
             .filter(
@@ -174,13 +177,16 @@ class ExecutionSimulator:
             .one_or_none()
         )
 
-        # 마스터 정보 조회 (multiplier / 증거금)
+        # -------------------------------------------------
+        # 마스터 정보 조회
+        # -------------------------------------------------
         row = LSFuturesWatchlistRepository.get_by_symbol(db, order.symbol)
         if not row:
             raise Exception(f"Master not found for {order.symbol}")
 
         multiplier = Decimal(str(row["multiplier"]))
         opng_mgn = Decimal(str(row["opng_mgn"]))
+        currency = row["crncy_cd"]
 
         # -------------------------------------------------
         # 1️⃣ 신규 포지션
@@ -194,16 +200,21 @@ class ExecutionSimulator:
                 realized_pnl=Decimal("0"),
                 multiplier=multiplier,
                 opng_mgn=opng_mgn,
+                currency=currency,
             ))
             db.flush()
             return
 
-        if pos and Decimal(str(pos.qty)) == 0:
+        # -------------------------------------------------
+        # 기존 포지션이 0이었다면 재진입
+        # -------------------------------------------------
+        if Decimal(str(pos.qty)) == 0:
             pos.qty = delta_qty
             pos.entry_price = price
             pos.realized_pnl = Decimal("0")
             pos.multiplier = multiplier
             pos.opng_mgn = opng_mgn
+            pos.currency = currency
             db.flush()
             return
 
@@ -224,7 +235,6 @@ class ExecutionSimulator:
 
             pos.qty = new_qty
             pos.entry_price = total_cost / abs(new_qty)
-
             return
 
         # -------------------------------------------------
@@ -233,23 +243,28 @@ class ExecutionSimulator:
         close_qty = min(abs(old_qty), abs(delta_qty))
         direction = Decimal("1") if old_qty > 0 else Decimal("-1")
 
-        realized_pnl = (
+        # 🔥 원통화 손익 계산
+        realized_foreign = (
                 (price - old_entry)
                 * close_qty
                 * multiplier
                 * direction
         )
 
-        # 🔥 계좌 잔고에 즉시 반영
+        # 🔥 환율 적용
+        fx = FXService.get_rate(pos.currency)
+        realized_krw = realized_foreign * fx
+
+        # 🔥 계좌 잔고 반영 (KRW)
         account = (
             db.query(LSAccountBalance)
             .filter(LSAccountBalance.account_id == order.account_id)
             .one()
         )
 
-        account.balance = Decimal(str(account.balance)) + realized_pnl
+        account.balance = Decimal(str(account.balance)) + realized_krw
 
-        realized += realized_pnl
+        realized += realized_krw
 
         # -------------------------------------------------
         # 4️⃣ 완전 청산
@@ -257,15 +272,15 @@ class ExecutionSimulator:
         if new_qty == 0:
             pos.qty = Decimal("0")
             pos.entry_price = Decimal("0")
-            pos.realized_pnl = Decimal("0")  # 이미 계좌에 반영했으므로 초기화
+            pos.realized_pnl = Decimal("0")  # 이미 계좌에 반영 완료
             return
 
         # -------------------------------------------------
-        # 5️⃣ 포지션 전환 (롱 → 숏 or 반대)
+        # 5️⃣ 포지션 전환 (롱 → 숏)
         # -------------------------------------------------
         if old_qty * new_qty < 0:
             pos.qty = new_qty
-            pos.entry_price = price  # 🔥 새 방향은 체결가가 평단
+            pos.entry_price = price
             pos.realized_pnl = Decimal("0")
             return
 

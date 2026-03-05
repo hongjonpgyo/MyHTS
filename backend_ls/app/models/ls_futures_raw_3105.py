@@ -52,7 +52,7 @@ class LSFuturesRaw3105(Base):
     # 날짜 정보
     # -------------------------
     lstng_dt = Column(CHAR(8))
-    mrtr_dt = Column(CHAR(8))
+    mtrt_dt = Column(CHAR(8))
     fnl_dl_dt = Column(CHAR(8))
     fst_trsf_dt = Column(CHAR(8))
 

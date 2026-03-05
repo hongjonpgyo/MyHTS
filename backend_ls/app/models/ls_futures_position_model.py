@@ -21,6 +21,7 @@ class Position(Base):
 
     # 🔥 계약당 개시증거금
     opng_mgn = Column(Numeric(18, 2), nullable=False, default=0)
+    currency = Column(String(10))
 
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(

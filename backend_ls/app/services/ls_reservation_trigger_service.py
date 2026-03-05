@@ -75,6 +75,7 @@ class LSReservationTriggerService:
                             symbol=r.symbol,
                             price=tick_price,
                             source="OCO_REFRESH",
+                            event_type="REFRESH",
                         )
 
                 triggered_count += 1

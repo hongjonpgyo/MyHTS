@@ -28,7 +28,8 @@ class LSFuturesWatchlistRepository:
             symbol,
             multiplier,
             opng_mgn,
-            mntnc_mgn
+            mntnc_mgn,
+            crncy_cd
         FROM ls_futures_watchlist_view
         WHERE symbol = :symbol
         """
