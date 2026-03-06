@@ -5,37 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fc4ef0b0-0a61-4aa1-a466-0a98435f6527" name="변경" comment=".">
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/cache/symbol_meta_cache.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/core/admin_auth.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/core/jwt.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/core/ls_tick_queue_engine.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/core/security.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/models/admin_user_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/routers/ls_futures_admin_router.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/schemas/admin_account_schema.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/app/utils/risk_calc.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_ls/create_admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_ls/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/MyHTS.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/MyHTS.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/cache/ls_price_cache.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/cache/ls_price_cache.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/ls_api/ls_ws_client_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/ls_api/ls_ws_client_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/ls_api/tr_3105.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/ls_api/tr_3105.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/models/ls_futures_position_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/models/ls_futures_position_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/models/ls_futures_raw_3105.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/models/ls_futures_raw_3105.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/realtime/price_broadcast.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/realtime/price_broadcast.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/repositories/ls_futures_watchlist_repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/repositories/ls_futures_watchlist_repo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/routers/ls_futures_router.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/routers/ls_futures_router.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/schemas/ls_position_schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/schemas/ls_position_schema.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/services/account/account_snapshot_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/services/account/account_snapshot_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/services/fx/exim_fx_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/services/fx/exim_fx_loader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/services/fx_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/services/fx_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/services/ls_execution_simulator_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_execution_simulator_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/services/ls_order_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_order_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/services/ls_orderbook_engine.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_orderbook_engine.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/services/ls_position_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_position_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/app/services/ls_reservation_trigger_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/app/services/ls_reservation_trigger_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ls/scripts/ls_sync_ls_futures_script.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ls/scripts/ls_sync_ls_futures_script.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,12 +31,12 @@
     &quot;assignee&quot;: &quot;jonhpyo&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/hongjonpgyo/MyHTS.git",
-    "accountId": "3bd86b64-9f4d-4d2b-b1c6-b88cea06a703"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/hongjonpgyo/MyHTS.git&quot;,
+    &quot;accountId&quot;: &quot;3bd86b64-9f4d-4d2b-b1c6-b88cea06a703&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -125,7 +98,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-f69e5c277ee4-cbfc7b97e6b2-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-252.27397.106" />
+        <option value="bundled-python-sdk-4e2b1448bda8-9a97661f3031-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.27397.106" />
       </set>
     </attachedChunks>
   </component>
